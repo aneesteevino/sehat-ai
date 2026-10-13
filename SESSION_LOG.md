@@ -76,4 +76,4 @@ Repository foundation verified and committed locally on branch `main` as `c53833
 
 ### Stopping point
 
-Milestone 2 is implemented and verified. Recovery files are current. Next: commit and push the milestone, then begin Milestone 3 identity and persistence.
+Milestone 2 is implemented and verified in commit `4de580a`. A generated editable-install `.egg-info` directory was caught during the pre-push review, removed, ignored, and excluded from the amended commit. Next: push the milestone and this recovery checkpoint, then begin Milestone 3 identity and persistence.

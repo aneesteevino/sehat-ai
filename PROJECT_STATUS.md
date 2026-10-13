@@ -42,6 +42,8 @@ See `ARCHITECTURE.md`. In short: Vercel-ready Next.js App Router frontend with T
 - Local branch: `main`, tracking `origin/main`.
 - Remote: `https://github.com/aneesteevino/sehat-ai.git`.
 - Foundation milestone commit: `c538338` (`chore: establish Sehat AI project foundation`).
+- Phase 0 findings commit: `bdd5ba6` (`docs: record verified phase zero findings`).
+- Milestone 2 implementation commit: `4de580a` (`feat: add Next.js and FastAPI foundations`).
 
 ## Test status
 
