@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools==82.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sehat-ai-backend"
+version = "0.1.0"
+description = "Safety-first API foundation for Sehat AI"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "fastapi==0.143.0",
+  "pydantic-settings==2.15.0",
+  "uvicorn[standard]==0.54.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx==0.28.1",
+  "pytest==9.1.1",
+  "ruff==0.17.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "application/backend/src"}
+
+[tool.setuptools.packages.find]
+where = ["application/backend/src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests/backend"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]

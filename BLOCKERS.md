@@ -4,10 +4,8 @@ Last updated: 2026-10-14 (Asia/Karachi)
 
 ## B-001: GitHub repository creation unavailable
 
-- Status: Blocking remote publication, not local development.
-- Evidence: GitHub connector supports repository/file/commit operations for existing repositories but exposes no create-repository action. GitHub CLI is not installed. No exact repository named `sehat-ai` was found for the authenticated owner.
-- Needed: Create `sehat-ai` through an authorized GitHub UI/API path, or expose repository creation / install and authenticate GitHub CLI.
-- Safety: Do not push to a similarly named third-party repository.
+- Status: Resolved 2026-10-14.
+- Resolution: The user created `https://github.com/aneesteevino/sehat-ai.git`. Repository identity, empty state, default branch, and admin/push permission were verified before it was attached as `origin` and `main` was pushed.
 
 ## B-002: Vercel project scope unauthorized
 

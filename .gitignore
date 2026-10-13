@@ -14,6 +14,7 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+*.egg-info/
 .coverage
 htmlcov/
 
@@ -23,6 +24,7 @@ dist/
 build/
 .next/
 .turbo/
+*.tsbuildinfo
 coverage/
 
 # Models, caches, vector indexes, and generated data

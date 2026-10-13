@@ -32,7 +32,7 @@ Exact hosted model selection is intentionally deferred until the account can lis
 
 ## Proposed architecture
 
-Use a React/TypeScript frontend on Vercel, a portable FastAPI service, MongoDB Atlas if verified, local development embeddings, and a provider-neutral generator. Keep emergency triage and all authorization deterministic. Treat uploaded and retrieved text as untrusted. Validate structured model output and citations before display.
+Use a Next.js/TypeScript App Router frontend styled with Tailwind CSS on Vercel, a portable FastAPI service, MongoDB Atlas if verified, local development embeddings, and a provider-neutral generator. Keep emergency triage and all authorization deterministic. Treat uploaded and retrieved text as untrusted. Validate structured model output and citations before display.
 
 ## Cost and storage
 

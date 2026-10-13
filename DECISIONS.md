@@ -6,11 +6,13 @@ Status: Accepted, 2026-10-14.
 
 Use one repository for frontend, backend, AI modules, tests, and documentation. This reduces synchronization risk and supports atomic, testable milestones.
 
-## ADR-002: React frontend and FastAPI backend
+## ADR-002: Next.js App Router frontend and FastAPI backend
 
 Status: Accepted as baseline, 2026-10-14.
 
-Use React with TypeScript for the frontend and Python 3.12 with FastAPI for the API. FastAPI matches the project requirement and Python AI ecosystem. The backend must remain portable because Vercel's function payload limit and ephemeral execution are not ideal for document processing or local model loading.
+Use Next.js with TypeScript and the App Router for the frontend, Tailwind CSS for styling, and Python 3.12 with FastAPI for the API. Next.js server components are the default; client components are limited to browser-only interactions such as API readiness state. FastAPI matches the project requirement and Python AI ecosystem. The backend must remain portable because Vercel's function payload limit and ephemeral execution are not ideal for document processing or local model loading.
+
+This decision supersedes the earlier Vite proposal before any frontend implementation was committed. Vite is not the application build system.
 
 ## ADR-003: Backend deployment remains undecided
 

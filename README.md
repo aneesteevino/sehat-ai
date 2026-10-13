@@ -10,7 +10,7 @@ Phase 0 (environment validation and repository foundation) is complete locally. 
 
 ## Planned architecture
 
-- React + TypeScript frontend, deployable to Vercel.
+- Next.js frontend with TypeScript, the App Router, and Tailwind CSS, deployable to Vercel.
 - Python 3.12 + FastAPI backend with typed schemas and provider abstractions.
 - MongoDB Atlas for application data when account access is verified.
 - Local CPU embeddings for development; Atlas Vector Search only after capability testing.
@@ -41,7 +41,19 @@ scripts/            Reproducible maintenance and validation commands
 
 ## Quick start
 
-Application setup commands will be added in Milestone 2 after dependencies are pinned and installed. The current milestone contains documentation and repository controls only.
+```powershell
+# Backend (from the repository root)
+python -m venv .venv
+.\.venv\Scripts\python -m pip install -e '.[dev]'
+.\.venv\Scripts\python -m uvicorn sehat_api.main:app --reload --port 8000
+
+# Frontend (in a second terminal)
+cd application\frontend
+npm install
+npm run dev
+```
+
+The Next.js application defaults to `http://localhost:3000` and checks the FastAPI readiness endpoint at `http://127.0.0.1:8000`.
 
 ## License
 

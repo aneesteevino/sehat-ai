@@ -6,7 +6,7 @@ Acceptance criteria: environment facts recorded; architecture and cost baseline 
 
 ## Milestone 2 — Runnable shells
 
-Acceptance criteria: FastAPI health/config API and React TypeScript shell run locally; lint, typecheck, unit tests, and production builds pass without cloud credentials.
+Acceptance criteria: FastAPI health/config API and a Next.js TypeScript App Router shell styled with Tailwind CSS run locally; lint, typecheck, unit tests, and production builds pass without cloud credentials.
 
 ## Milestone 3 — Identity and persistence
 

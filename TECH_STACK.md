@@ -4,7 +4,8 @@ Last verified: 2026-10-14.
 
 | Layer | Selection | Status | Rationale / limitation |
 |---|---|---|---|
-| Frontend | React + TypeScript + Vite | Proposed | Small static build; straightforward Vercel deployment. |
+| Frontend | Next.js 16.4 + TypeScript 6.0, App Router | Selected | Server components by default, typed routing, and direct Vercel compatibility. Node.js 22.13 satisfies Next.js requirements. |
+| Styling | Tailwind CSS 4.3 | Selected | Responsive, accessible utility styling with a small global design-token layer. |
 | Backend | Python 3.12 + FastAPI | Proposed | Installed Python is 3.12.4; typed API and OpenAPI support. |
 | Validation | Pydantic | Proposed | Shared typed boundary for requests, provider output, and tool schemas. |
 | Database | MongoDB Atlas Free cluster | Conditional | Free tier and Vector Search testing are documented, but this account is not inspectable yet. |

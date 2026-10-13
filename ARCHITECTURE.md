@@ -4,7 +4,7 @@
 
 ```text
 Browser
-  -> React/TypeScript UI (Vercel candidate)
+  -> Next.js App Router UI + Tailwind CSS (Vercel candidate)
       -> FastAPI application service (portable hosting)
           -> Auth/RBAC and audit layer
           -> Safety policy engine (deterministic)
@@ -47,4 +47,4 @@ If evidence is insufficient, the response must abstain from unsupported medical 
 
 ## Deployment posture
 
-The frontend can use Vercel. The backend stays portable until file upload, duration, cold-start, model loading, and zero-cost constraints are tested. Large files should eventually use direct object-storage uploads rather than transit through a Vercel Function; no storage provider is selected yet.
+The Next.js frontend uses server components by default and small client components only where browser state or interactivity is required. Tailwind CSS is the styling system; global CSS is limited to design tokens and document defaults. The frontend can use Vercel. The backend stays portable until file upload, duration, cold-start, model loading, and zero-cost constraints are tested. Large files should eventually use direct object-storage uploads rather than transit through a Vercel Function; no storage provider is selected yet.

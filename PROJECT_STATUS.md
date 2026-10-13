@@ -4,7 +4,7 @@ Last updated: 2026-10-14 (Asia/Karachi)
 
 ## Phase
 
-Phase 0 complete locally: environment inspection, current-service research, architecture baseline, cost controls, recovery files, and repository foundation.
+Milestone 2 complete and verified: runnable FastAPI and Next.js foundations. Milestone 3 (identity and persistence) is next.
 
 ## Completed and verified
 
@@ -18,33 +18,37 @@ Phase 0 complete locally: environment inspection, current-service research, arch
 - Firecrawl is connected but has a negative current credit balance, so no paid/credit-consuming research crawl was started.
 - Current official documentation was reviewed for Hugging Face inference pricing, MongoDB Atlas Free and Vector Search, Vercel Hobby/function limits, and GitHub Actions billing.
 - Initial architecture, roadmap, cost register, decision log, blockers, and recovery instructions were created.
+- GitHub repository `aneesteevino/sehat-ai` was verified, attached as `origin`, and the Phase 0 commits were pushed to `main`.
+- FastAPI foundation implemented with typed settings, production secret validation, JSON logging, request IDs, constrained CORS, and liveness/readiness endpoints.
+- Next.js 16.4 frontend implemented with TypeScript 6.0, App Router server components, a narrow client readiness component, and Tailwind CSS 4.
+- Local unit, lint, type, production-build, and runtime smoke checks passed.
 
 ## Partially completed
 
-- Git is local-only. The initial commit and remote publication remain pending verification and/or repository creation.
-- The technology choices are a baseline; database and hosted inference choices remain conditional on connected-account testing.
+- The technology choices beyond the application shell remain conditional on database and hosted inference account testing.
+- Authentication and persistence architecture is planned but not implemented.
 
 ## Not started
 
-- Frontend and backend source code.
 - Authentication, database integration, LLM integration, RAG, ingestion, workflows, evaluation, and deployment.
 - Clinical/domain review; this is mandatory before any claim of medical readiness.
 
 ## Current architecture
 
-See `ARCHITECTURE.md`. In short: Vercel-hosted React frontend; modular FastAPI backend; MongoDB Atlas when verified; local development embeddings; provider-neutral LLM adapter; deterministic safety gates around model use.
+See `ARCHITECTURE.md`. In short: Vercel-ready Next.js App Router frontend with Tailwind CSS; modular FastAPI backend; MongoDB Atlas when verified; local development embeddings; provider-neutral LLM adapter; deterministic safety gates around model use.
 
 ## Repository state
 
-- Local branch at inspection: `master`, no commits.
-- Target default branch: `main`.
-- Remote: none configured.
+- Local branch: `main`, tracking `origin/main`.
+- Remote: `https://github.com/aneesteevino/sehat-ai.git`.
 - Foundation milestone commit: `c538338` (`chore: establish Sehat AI project foundation`).
 
 ## Test status
 
-- Repository validation passed: required files present, `git diff --check` clean, and no likely committed secret assignments detected outside `.env.example`.
-- Application tests: not applicable yet; no application code exists.
+- Backend: 7 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
+- Frontend: 3 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed and prerendered `/` statically.
+- Runtime smoke: Next.js returned HTTP 200; FastAPI readiness returned HTTP 200 with the typed contract and request ID; configured CORS preflight returned HTTP 200.
+- Production npm dependency audit: 0 known vulnerabilities. Development-only audit currently reports 19 moderate and 5 high transitive advisories in current Jest and Next ESLint tooling; npm's proposed fixes are unsafe major downgrades, so these are documented rather than forced.
 
 ## Deployment status
 
@@ -52,9 +56,10 @@ Not deployed. Vercel project access is blocked by connector scope authorization.
 
 ## Storage status
 
-- Free on C: at initial inspection: 102.1 GiB.
+- Free on C: after Milestone 2: 98.83 GiB.
 - Project budget: no more than 50 GB; near-term target below 2 GB excluding package caches.
-- No models, datasets, virtual environments, or package trees have been downloaded.
+- Project footprint including local dependencies/build output: approximately 586.74 MiB (`.venv` 71.65 MiB, `node_modules` 489.34 MiB, `.next` 25.02 MiB).
+- No models or datasets have been downloaded.
 
 ## Known limitations
 
