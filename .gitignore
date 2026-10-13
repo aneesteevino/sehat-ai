@@ -1,0 +1,51 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node and frontend builds
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+coverage/
+
+# Models, caches, vector indexes, and generated data
+.cache/
+models/
+model_weights/
+*.onnx
+*.safetensors
+*.bin
+data/processed/*
+!data/processed/.gitkeep
+data/uploads/
+data/vector_store/
+
+# Vercel and local tooling
+.vercel/
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Medical documents are never committed by default
+*.pdf
+*.dicom
+*.dcm
