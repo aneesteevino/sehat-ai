@@ -55,3 +55,9 @@ Do not enable billing or paid compute. Use mocks for automated tests, cache only
 Status: Accepted, 2026-10-14.
 
 The local Git working tree is the active source of truth; GitHub becomes the durable remote after repository creation. Google Drive may hold exported reports or stakeholder documents later, but never a conflicting source copy.
+
+## ADR-010: Recovery and automatic resumption
+
+Status: Accepted, 2026-10-14.
+
+The repository recovery files are the durable handoff mechanism. The Codex desktop environment supports scheduled thread heartbeats, but no automation is created now: there is no current usage interruption to recover from, usage recovery cannot be safely inferred by a polling task, and the brief explicitly forbids wasteful recurring checks. If a real limit interruption occurs and scheduling remains available, create at most one five-hour follow-up only when it can resume this exact thread without repeatedly consuming usage. Otherwise, resume manually by reading the five recovery files and verifying Git state.

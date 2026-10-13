@@ -39,11 +39,11 @@ See `ARCHITECTURE.md`. In short: Vercel-hosted React frontend; modular FastAPI b
 - Local branch at inspection: `master`, no commits.
 - Target default branch: `main`.
 - Remote: none configured.
-- Latest verified commit: none at the time this file was authored.
+- Foundation milestone commit: `c538338` (`chore: establish Sehat AI project foundation`).
 
 ## Test status
 
-- Repository safety controls and required-file presence are to be checked before the first commit.
+- Repository validation passed: required files present, `git diff --check` clean, and no likely committed secret assignments detected outside `.env.example`.
 - Application tests: not applicable yet; no application code exists.
 
 ## Deployment status
