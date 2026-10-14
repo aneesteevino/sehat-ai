@@ -14,6 +14,8 @@ from sehat_api import __version__
 from sehat_api.api.answers import router as answers_router
 from sehat_api.api.identity import router as identity_router
 from sehat_api.api.knowledge import router as knowledge_router
+from sehat_api.api.workflows import router as workflows_router
+from sehat_api.audit.ledger import InMemoryAuditLedger
 from sehat_api.config import Settings, get_settings
 from sehat_api.generation.provider import MockGenerationProvider
 from sehat_api.generation.service import GenerationService
@@ -28,6 +30,8 @@ from sehat_api.models import HealthCheck, HealthResponse
 from sehat_api.repositories.identity import IdentityRepository, InMemoryIdentityRepository
 from sehat_api.repositories.knowledge import InMemoryKnowledgeRepository, KnowledgeRepository
 from sehat_api.repositories.mongo_identity import MongoIdentityRepository
+from sehat_api.safety.policy import RedFlagPolicy
+from sehat_api.workflows.service import WorkflowService
 
 logger = logging.getLogger("sehat_api")
 
@@ -62,10 +66,14 @@ def create_app(
     ingestion_service = IngestionService(active_knowledge_repository, embeddings)
     retrieval_service = RetrievalService(active_knowledge_repository, embeddings)
     usage_ledger = InMemoryUsageLedger()
+    safety_policy = RedFlagPolicy()
+    audit_ledger = InMemoryAuditLedger()
+    workflow_service = WorkflowService(audit_ledger)
     generation_service = GenerationService(
         retrieval_service,
         MockGenerationProvider(),
         usage_ledger,
+        safety_policy,
         minimum_score=active_settings.generation_minimum_score,
         timeout_seconds=active_settings.generation_timeout_seconds,
         max_attempts=active_settings.generation_max_attempts,
@@ -97,6 +105,9 @@ def create_app(
     api.state.retrieval_service = retrieval_service
     api.state.generation_service = generation_service
     api.state.generation_usage_ledger = usage_ledger
+    api.state.safety_policy = safety_policy
+    api.state.audit_ledger = audit_ledger
+    api.state.workflow_service = workflow_service
     auth_secret = (
         active_settings.auth_secret.get_secret_value().encode()
         if active_settings.auth_secret
@@ -119,6 +130,7 @@ def create_app(
     api.include_router(identity_router)
     api.include_router(knowledge_router)
     api.include_router(answers_router)
+    api.include_router(workflows_router)
 
     @api.exception_handler(Exception)
     async def unhandled_exception(request: Request, exc: Exception) -> JSONResponse:

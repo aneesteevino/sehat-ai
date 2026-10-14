@@ -1,6 +1,6 @@
 # Verified Technology Stack Baseline
 
-Last verified: 2026-10-14.
+Last verified: 2026-10-15.
 
 | Layer | Selection | Status | Rationale / limitation |
 |---|---|---|---|
@@ -14,6 +14,7 @@ Last verified: 2026-10-14.
 | Approved document extraction | pypdf 6.20 + strict UTF-8 text | Implemented for bounded registry fixtures | No OCR; arbitrary uploads remain prohibited until isolation is added. |
 | Development retrieval | 256-dimensional signed lexical hashing + hybrid ranker | Implemented baseline | Zero-download and deterministic; not semantic or medically validated. |
 | Development generation | Provider-neutral FastAPI service + `mock/deterministic-evidence-v1` | Implemented baseline | Zero-cost extractive preview with strict schema, citations, abstention, retry/timeout, and content-free usage records; not an LLM or medical model. |
+| Controlled workflows | FastAPI state machines + deterministic emergency policy | Implemented baseline | Owner-scoped, idempotent transitions and minimized audit events; phrase policy is narrow and not clinical triage. |
 | Embeddings | `sentence-transformers/all-MiniLM-L6-v2` | Candidate, metadata verified | Apache-2.0, 384 dimensions, CPU-capable; quality and local footprint still require measurement. |
 | Reranker | `cross-encoder/ms-marco-MiniLM-L6-v2` | Optional candidate | Apache-2.0; about 91 MB weights; include only if evaluation improves. |
 | Local generator | `Qwen/Qwen2.5-1.5B-Instruct` | Fallback candidate only | Apache-2.0 metadata verified; full/quantized runtime size and this machine's performance are not tested, so do not download yet. |

@@ -95,3 +95,9 @@ Status: Accepted as Milestone 5 baseline, 2026-10-15.
 Keep generation authority in FastAPI behind a small provider protocol. Use the deterministic zero-cost mock until a real provider's access, model, SDK version, quota, and fallback are verified. A response is released only after retrieval adequacy, strict schema, exact evidence-ID membership, extractive claim support, and instruction-marker checks pass. Keep application-owned uncertainty and safety boundaries outside the provider. Do not stream partial output until an equivalent safe release design exists.
 
 This deliberately avoids adding a TypeScript AI SDK to the Next.js browser path: the existing architecture assigns provider secrets, retrieval, usage accounting, and medical safety checks to FastAPI. A future provider adapter must preserve that boundary.
+
+## ADR-016: Deterministic emergency precedence and explicit workflow transitions
+
+Status: Accepted as Milestone 6 baseline, 2026-10-15.
+
+Evaluate the narrow application-owned emergency policy before retrieval or generation. A match bypasses both and returns stable local-emergency guidance. Treat a non-match as no assurance. Keep workflow kinds, states, actions, ownership, idempotency, and input schemas in application code; no model may authorize or execute a transition. Audit only allow-listed operational metadata and keep development fixtures synthetic.

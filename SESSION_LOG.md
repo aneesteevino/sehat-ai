@@ -159,3 +159,14 @@ Milestone 2 is implemented and verified in commit `4de580a`. A generated editabl
 ### Stopping point
 
 Milestone 5 implementation was committed as `a33a7e7` and pushed to the verified `aneesteevino/sehat-ai` repository. Milestone 6 controlled workflows is next; deployment authorization, live Atlas, hosted inference, arbitrary upload isolation, and clinical review blockers remain open.
+
+## 2026-10-15 — Milestone 6 controlled workflows
+
+- Added deterministic emergency phrase routing before retrieval/generation, with application-owned local-emergency guidance and zero provider attempts.
+- Added owner-scoped, idempotent state machines for a fixed symptom questionnaire and synthetic document facts, plus strict transition and input allow-lists.
+- Added a content-minimized in-memory audit ledger whose metadata schema excludes health/document/model content.
+- Added authenticated FastAPI and Next.js safety/workflow routes and an accessible safety/questionnaire workspace preview.
+- Ruff and 59 backend tests passed; 15 frontend tests, TypeScript, ESLint, production build, and production audit passed.
+- Browser verification completed emergency routing and the full questionnaire with expected 200/201 logs and no console errors.
+- No provider call occurred on emergency routing; no model, paid service, upload, Atlas resource, or real patient data was used.
+- Final footprint was approximately 732.74 MiB with 59.47 GiB free on C:.

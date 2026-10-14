@@ -9,6 +9,8 @@ Browser
       -> FastAPI application service (portable hosting)
           -> identity service -> Argon2id + opaque revocable sessions + RBAC
           -> Safety policy engine (deterministic)
+          -> controlled workflow service -> owner/idempotency/transition gates
+          -> content-minimized audit ledger (in-memory baseline)
           -> retrieval service -> deterministic lexical embeddings + evidence citations
           -> generation service -> schema/citation/extractive gates -> mock provider
               -> optional verified hosted provider (not configured)
@@ -49,6 +51,8 @@ An assistant response will separate:
 If evidence is insufficient, the response must abstain from unsupported medical claims.
 
 The Milestone 5 generation path always retrieves first. Its current deterministic mock returns only extractive claims, and application code validates the complete response schema, evidence-ID allow-list, extractive support, instruction markers, timeouts, retries, and usage metadata before release. Streaming is deferred because unvalidated partial output would bypass this release gate. See `docs/research/GROUNDED_ANSWER_CONTRACT.md`.
+
+Milestone 6 places the deterministic emergency policy before retrieval and generation. Emergency matches return an application-owned escalation response with zero provider attempts. Guided workflows use explicit state/action allow-lists, owner checks, idempotency, synthetic bounded inputs, and content-minimized audit events. The provider has no transition or side-effect authority.
 
 ## Deployment posture
 

@@ -1,0 +1,1 @@
+"""Content-minimized audit contracts."""

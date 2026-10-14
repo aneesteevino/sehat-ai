@@ -4,7 +4,7 @@ Last updated: 2026-10-15 (Asia/Karachi)
 
 ## Phase
 
-Milestone 5 complete and verified locally: retrieval-first deterministic answer generation, strict grounding validation, abstention, and an authenticated answer preview. Milestone 6 (controlled workflows) is next.
+Milestone 6 complete and verified locally: deterministic emergency precedence, controlled workflow state machines, minimized audit events, and authenticated guided previews. Milestone 7 (product surfaces) is next.
 
 ## Completed and verified
 
@@ -33,6 +33,9 @@ Milestone 5 complete and verified locally: retrieval-first deterministic answer 
 - A provider-neutral generation service now enforces retrieval adequacy, bounded timeout/retry, strict output schemas, evidence-ID allow-listing, extractive support, common instruction-marker checks, and content-free usage accounting.
 - The active `mock/deterministic-evidence-v1` provider makes no external call, downloads no model, costs USD 0, and deterministically selects sentences from eligible evidence.
 - Authenticated FastAPI and Next.js answer endpoints return either validated claims with exact citations or deterministic abstention. The accessible UI separates answer, evidence, uncertainty, and application-owned safety limitations.
+- A narrow deterministic emergency policy runs before retrieval/generation and recognizes configured breathing, chest, consciousness, bleeding, and stroke phrases. Matches return local-emergency guidance with zero provider attempts.
+- Owner-scoped symptom-questionnaire and synthetic document-explanation workflows enforce explicit transitions and idempotency. A content-minimized in-memory audit ledger rejects non-allow-listed metadata.
+- The workspace includes an accessible safety gate and fixed questionnaire preview; it produces no diagnosis or treatment.
 
 ## Partially completed
 
@@ -43,7 +46,7 @@ Milestone 5 complete and verified locally: retrieval-first deterministic answer 
 
 ## Not started
 
-- Real hosted/local LLM integration, controlled workflows, broader evaluation, and deployment.
+- Real hosted/local LLM integration, broader product surfaces/evaluation, and deployment.
 - Clinical/domain review; this is mandatory before any claim of medical readiness.
 
 ## Current architecture
@@ -66,9 +69,9 @@ See `ARCHITECTURE.md`. In short: Vercel-ready Next.js App Router frontend with T
 
 ## Test status
 
-- Backend: 47 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
-- Frontend: 12 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed with dynamic evidence and answer BFF routes.
-- Runtime smoke: registration and login returned HTTP 201/200; the authenticated answer BFF returned HTTP 200, an extractive answer bound to returned evidence, provider `mock`, cost 0, and `Cache-Control: no-store`.
+- Backend: 59 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
+- Frontend: 15 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed with 13 application routes.
+- Runtime smoke: authenticated browser safety check returned an emergency alert and AI-bypass marker; the guided questionnaire completed all three transitions with HTTP 200/201 and no browser console errors.
 - Production npm dependency audit: 0 known vulnerabilities. Development-only audit currently reports 19 moderate and 5 high transitive advisories in current Jest and Next ESLint tooling; npm's proposed fixes are unsafe major downgrades, so these are documented rather than forced.
 
 ## Deployment status
@@ -77,9 +80,9 @@ Not deployed. Vercel project access is blocked by connector scope authorization.
 
 ## Storage status
 
-- Free on C: after final Milestone 5 browser/build verification: 59.50 GiB.
+- Free on C: after final Milestone 6 browser/build verification: 59.47 GiB.
 - Project budget: no more than 50 GB; near-term target below 2 GB excluding package caches.
-- Project footprint including local dependencies/build output: approximately 708.16 MiB (`.venv` 85.67 MiB, `node_modules` 489.34 MiB, `.next` 131.69 MiB). The temporary development and final production builds increased ignored `.next` cache output; source changes remain small.
+- Project footprint including local dependencies/build output: approximately 732.74 MiB. The temporary development and final production builds increased ignored `.next` cache output; source changes remain small.
 - No models or datasets have been downloaded.
 
 ## Known limitations

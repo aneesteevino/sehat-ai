@@ -86,15 +86,23 @@ class UsageRecord:
     estimated_cost_usd: float
     attempts: int
     duration_ms: int
-    outcome: Literal["answered", "abstained", "failed"]
+    outcome: Literal["answered", "abstained", "escalated", "failed"]
+
+
+@dataclass(frozen=True, slots=True)
+class SafetyEscalation:
+    categories: tuple[str, ...]
+    message: str
+    actions: tuple[str, ...]
 
 
 @dataclass(frozen=True, slots=True)
 class GroundedAnswer:
-    status: Literal["answered", "abstained"]
+    status: Literal["answered", "abstained", "escalated"]
     claims: tuple[GroundedClaim, ...]
     evidence: tuple[EvidenceMatch, ...]
     uncertainty: str
     safety_notice: str
     abstention_reason: str | None
+    escalation: SafetyEscalation | None
     usage: UsageRecord

@@ -58,3 +58,13 @@ The current controls address plaintext password exposure, stolen database sessio
 - The browser path uses bounded same-origin JSON POSTs and non-cacheable responses.
 
 These controls implement a narrow evaluation baseline. They do not prove resistance to persistent prompt injection or medical groundedness. Broader adversarial evaluation and qualified clinical review remain required.
+
+## Controlled workflow controls
+
+- The emergency policy runs before retrieval and generation; matching requests record zero provider attempts.
+- A non-match is not presented as medical clearance. The English phrase list is narrow and incomplete.
+- Workflow ownership is server-derived from the authenticated session. Cross-owner access returns not found.
+- Only allow-listed state/action pairs can execute. Invalid order and terminal-state mutation fail closed.
+- Idempotency prevents accidental duplicate mutations and detects keys reused for different operations.
+- Document explanations require explicitly synthetic bounded facts; arbitrary uploads remain disabled.
+- Audit metadata has a hard allow-list and excludes health text, selections, document facts, and model content.

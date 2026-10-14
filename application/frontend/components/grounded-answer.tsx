@@ -14,12 +14,13 @@ type Evidence = {
   }
 }
 type AnswerResult = {
-  status: 'answered' | 'abstained'
+  status: 'answered' | 'abstained' | 'escalated'
   claims: Array<{ text: string; evidence_ids: string[] }>
   evidence: Evidence[]
   uncertainty: string
   safety_notice: string
   abstention_reason: 'insufficient_evidence' | 'unsafe_input' | null
+  escalation: { categories: string[]; message: string; actions: string[] } | null
   usage: {
     provider: string
     model: string
@@ -79,7 +80,9 @@ export function GroundedAnswer() {
           <section aria-labelledby="answer-result-title">
             <p className="text-xs font-bold tracking-wider text-teal-200 uppercase">Answer</p>
             <h3 className="mt-2 text-xl font-bold" id="answer-result-title">
-              {result.status === 'answered' ? 'Evidence-grounded preview' : 'Not enough approved evidence'}
+              {result.status === 'answered'
+                ? 'Evidence-grounded preview'
+                : result.status === 'escalated' ? 'Get emergency help now' : 'Not enough approved evidence'}
             </h3>
             {result.status === 'answered' ? (
               <ol className="mt-4 space-y-3">
@@ -93,6 +96,13 @@ export function GroundedAnswer() {
                   </li>
                 ))}
               </ol>
+            ) : result.status === 'escalated' && result.escalation ? (
+              <div className="mt-4 rounded-2xl border border-red-300/40 bg-red-950/60 p-5" role="alert">
+                <p className="font-bold text-red-100">{result.escalation.message}</p>
+                <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-red-100/90">
+                  {result.escalation.actions.map((action) => <li key={action}>{action}</li>)}
+                </ul>
+              </div>
             ) : <p className="mt-3 leading-7 text-emerald-50">I can’t answer this reliably from the currently approved sources.</p>}
           </section>
 

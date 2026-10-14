@@ -16,6 +16,7 @@ from sehat_api.generation.models import (
     ProviderEvidence,
     ProviderRequest,
     ProviderUsage,
+    SafetyEscalation,
     UsageRecord,
 )
 from sehat_api.generation.provider import GenerationProvider, TransientProviderError
@@ -23,6 +24,7 @@ from sehat_api.generation.usage import InMemoryUsageLedger
 from sehat_api.knowledge.embeddings import tokenize
 from sehat_api.knowledge.models import EvidenceMatch
 from sehat_api.knowledge.retrieval import RetrievalService
+from sehat_api.safety.policy import RedFlagPolicy
 
 SAFETY_NOTICE = (
     "Evaluation preview only. This is not a diagnosis, prescription, emergency service, "
@@ -94,6 +96,7 @@ class GenerationService:
         retrieval: RetrievalService,
         provider: GenerationProvider,
         usage_ledger: InMemoryUsageLedger,
+        safety_policy: RedFlagPolicy | None = None,
         *,
         minimum_score: float = 0.13,
         timeout_seconds: float = 8.0,
@@ -108,12 +111,32 @@ class GenerationService:
         self._retrieval = retrieval
         self._provider = provider
         self._usage_ledger = usage_ledger
+        self._safety_policy = safety_policy or RedFlagPolicy()
         self._minimum_score = minimum_score
         self._timeout_seconds = timeout_seconds
         self._max_attempts = max_attempts
 
     async def answer(self, question: str) -> GroundedAnswer:
         started = time.monotonic()
+        safety = self._safety_policy.evaluate(question)
+        if safety.level == "emergency":
+            usage = await self._record(
+                ProviderUsage(input_units=0, output_units=0), 0, "escalated", started
+            )
+            return GroundedAnswer(
+                status="escalated",
+                claims=(),
+                evidence=(),
+                uncertainty="This rule-based alert is intentionally conservative.",
+                safety_notice=SAFETY_NOTICE,
+                abstention_reason=None,
+                escalation=SafetyEscalation(
+                    categories=safety.categories,
+                    message=safety.message,
+                    actions=safety.actions,
+                ),
+                usage=usage,
+            )
         evidence = await self._retrieval.search(question, limit=5)
         eligible = tuple(
             match
@@ -196,6 +219,7 @@ class GenerationService:
             uncertainty=output.uncertainty,
             safety_notice=SAFETY_NOTICE,
             abstention_reason=None,
+            escalation=None,
             usage=usage,
         )
 
@@ -217,6 +241,7 @@ class GenerationService:
             ),
             safety_notice=SAFETY_NOTICE,
             abstention_reason=reason,
+            escalation=None,
             usage=usage,
         )
 
@@ -224,7 +249,7 @@ class GenerationService:
         self,
         usage: ProviderUsage,
         attempts: int,
-        outcome: Literal["answered", "abstained", "failed"],
+        outcome: Literal["answered", "abstained", "escalated", "failed"],
         started: float,
     ) -> UsageRecord:
         record = UsageRecord(

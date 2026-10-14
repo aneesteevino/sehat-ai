@@ -1,6 +1,6 @@
 # API and Cost Register
 
-Target: USD 0 additional spend. Last reviewed: 2026-10-14 .
+Target: USD 0 additional spend. Last reviewed: 2026-10-15.
 
 | Service | Model/version or resource | Availability verified | Free access requirement | Limitation | Fallback | Planned cost |
 |---|---|---:|---|---|---|---:|
@@ -8,6 +8,7 @@ Target: USD 0 additional spend. Last reviewed: 2026-10-14 .
 | Local embeddings | `sentence-transformers/all-MiniLM-L6-v2` | Public model metadata | Download model weights once | Local CPU/RAM/disk use; medical retrieval quality unproven | Deterministic test embeddings initially | $0 |
 | Deterministic retrieval baseline | 256-dimensional lexical feature hashing | Implemented and measured | Python standard library only | Lexical rather than semantic; tiny evaluation corpus | Future semantic model only if metrics improve | $0 |
 | Deterministic generation baseline | `mock/deterministic-evidence-v1` | Implemented and tested | Python standard library plus existing validation stack | Extractive software-contract baseline; not an LLM and cannot predict hosted quality | Deterministic abstention | $0 |
+| Controlled workflow baseline | Application-owned rules and state machines | Implemented and tested | Existing FastAPI/Pydantic stack | Narrow English emergency phrases; process-local state; not clinical triage | Immediate local-emergency message and safe failure | $0 |
 | Local reranking | `cross-encoder/ms-marco-MiniLM-L6-v2` | Public model metadata | Download roughly 91 MB weights once | Adds latency and dependencies; English/general-domain training | Skip reranker unless metrics improve | $0 |
 | Local generation | `Qwen/Qwen2.5-1.5B-Instruct` | Public model metadata | Download weights/runtime | Not yet benchmarked; even a small LLM may be too slow/large for this laptop or serverless hosting | Hosted free provider when verified; mock in tests | $0 |
 | MongoDB Atlas | Free cluster / Vector Search test use | Official docs only | Atlas account and supported region; one Free cluster per project | Shared resources and operational limits; actual account not connected | Repository test adapter; local ephemeral tests | $0 |

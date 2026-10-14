@@ -43,15 +43,24 @@ class UsageResponse(BaseModel):
     duration_ms: int
 
 
+class EscalationResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    categories: list[str]
+    message: str
+    actions: list[str]
+
+
 class AnswerResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    status: Literal["answered", "abstained"]
+    status: Literal["answered", "abstained", "escalated"]
     claims: list[ClaimResponse]
     evidence: list[EvidenceResponse]
     uncertainty: str
     safety_notice: str
     abstention_reason: str | None
+    escalation: EscalationResponse | None
     usage: UsageResponse
 
     @classmethod
@@ -66,6 +75,15 @@ class AnswerResponse(BaseModel):
             uncertainty=answer.uncertainty,
             safety_notice=answer.safety_notice,
             abstention_reason=answer.abstention_reason,
+            escalation=(
+                EscalationResponse(
+                    categories=list(answer.escalation.categories),
+                    message=answer.escalation.message,
+                    actions=list(answer.escalation.actions),
+                )
+                if answer.escalation
+                else None
+            ),
             usage=UsageResponse(
                 provider=answer.usage.provider,
                 model=answer.usage.model,

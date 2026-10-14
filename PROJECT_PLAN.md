@@ -20,11 +20,11 @@ Acceptance criteria: approved-source registry; safe PDF/text extraction; normali
 
 Acceptance criteria: provider abstraction, schema validation, timeouts/retries, mock tests, grounded-answer contract, citations, abstention, and usage accounting. A real provider is optional until free access is verified.
 
-## Milestone 6 — Controlled workflows
+## Milestone 6 — Controlled workflows (complete locally)
 
 Acceptance criteria: explicit tools and schemas; deterministic red-flag route; prompt-injection defenses; document explanation and symptom questionnaire; audit events; no autonomous diagnosis or prescribing.
 
-## Milestone 7 — Product surfaces
+## Milestone 7 — Product surfaces (next)
 
 Acceptance criteria: accessible chat, history, uploads, citations, symptom flow, medication information, privacy/settings, and doctor draft-review workspace with synthetic labeled data.
 

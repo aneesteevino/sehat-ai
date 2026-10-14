@@ -37,7 +37,7 @@ Indexes: unique `token_digest`; `user_id`; TTL `expires_at`. MongoDB TTL cleanup
 
 ### `audit_events`
 
-Planned fields: `_id`, `occurred_at`, `actor_user_id`, `action`, `target_type`, `target_id`, `outcome`, `request_id`, and a small allow-listed metadata object. Passwords, tokens, health text, document contents, and provider secrets must never be recorded. Expected indexes are `occurred_at` and `(actor_user_id, occurred_at)`. A deletion TTL will be added only after a written retention policy is approved.
+An in-memory adapter now implements `_id`, `occurred_at`, `actor_user_id`, `action`, `target_type`, `target_id`, `outcome`, `request_id`, and a small allow-listed metadata object. Passwords, tokens, health text, questionnaire selections, document contents, and provider secrets are rejected from metadata. Durable persistence remains planned; expected indexes are `occurred_at` and `(actor_user_id, occurred_at)`. A deletion TTL will be added only after a written retention policy is approved.
 
 ### Knowledge collections
 

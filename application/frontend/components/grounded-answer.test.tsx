@@ -31,6 +31,7 @@ describe('GroundedAnswer', () => {
         uncertainty: 'Limited to the approved corpus.',
         safety_notice: 'This is not a diagnosis.',
         abstention_reason: null,
+        escalation: null,
         usage: { provider: 'mock', model: 'deterministic-evidence-v1', estimated_cost_usd: 0, attempts: 1 },
       }),
     })
@@ -60,6 +61,7 @@ describe('GroundedAnswer', () => {
         uncertainty: 'The approved evidence is not sufficient to answer this question reliably.',
         safety_notice: 'This is not a diagnosis.',
         abstention_reason: 'insufficient_evidence',
+        escalation: null,
         usage: { provider: 'mock', model: 'deterministic-evidence-v1', estimated_cost_usd: 0, attempts: 0 },
       }),
     })
@@ -70,5 +72,33 @@ describe('GroundedAnswer', () => {
 
     await waitFor(() => expect(screen.getByText('Not enough approved evidence')).toBeVisible())
     expect(screen.getByText(/can’t answer this reliably/i)).toBeVisible()
+  })
+
+  it('renders emergency escalation instead of an answer', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        status: 'escalated',
+        claims: [],
+        evidence: [],
+        uncertainty: 'This rule-based alert is intentionally conservative.',
+        safety_notice: 'This app is not an emergency service.',
+        abstention_reason: null,
+        escalation: {
+          categories: ['chest'],
+          message: 'Contact your local emergency services now.',
+          actions: ['Do not wait for Sehat AI to respond.'],
+        },
+        usage: { provider: 'mock', model: 'deterministic-evidence-v1', estimated_cost_usd: 0, attempts: 0 },
+      }),
+    })
+    render(<GroundedAnswer />)
+
+    fireEvent.change(screen.getByLabelText('Question for grounded answer'), { target: { value: 'I have severe chest pain' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Prepare grounded answer' }))
+
+    await waitFor(() => expect(screen.getByText('Get emergency help now')).toBeVisible())
+    expect(screen.getByRole('alert')).toHaveTextContent(/local emergency services/i)
+    expect(screen.queryByText('Evidence-grounded preview')).not.toBeInTheDocument()
   })
 })
