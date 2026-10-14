@@ -19,7 +19,7 @@ Last updated: 2026-10-14 (Asia/Karachi)
 - Status: Blocking account-specific database validation.
 - Evidence: No callable MongoDB Atlas tools are exposed in this session, and no `MONGODB_URI` environment-variable name is configured.
 - Needed: Connect/expose the Atlas integration or later configure a least-privilege URI through local/Vercel secret settings.
-- Impact: Use a test adapter until Atlas can be verified. Do not create or modify databases blindly.
+- Impact: The conditional PyMongo adapter and indexes are implemented, but only the in-memory adapter is verified. Do not claim live durability or create/modify Atlas resources blindly.
 
 ## B-004: Hugging Face account connector unavailable
 

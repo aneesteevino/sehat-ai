@@ -10,7 +10,7 @@ Target: USD 0 additional spend. Last reviewed: 2026-10-14.
 | Local generation | `Qwen/Qwen2.5-1.5B-Instruct` | Public model metadata | Download weights/runtime | Not yet benchmarked; even a small LLM may be too slow/large for this laptop or serverless hosting | Hosted free provider when verified; mock in tests | $0 |
 | MongoDB Atlas | Free cluster / Vector Search test use | Official docs only | Atlas account and supported region; one Free cluster per project | Shared resources and operational limits; actual account not connected | Repository test adapter; local ephemeral tests | $0 |
 | Vercel | Hobby frontend | Account plan verified | Authorized Hobby account/project | Scope currently 403; usage limits; 4.5 MB function request/response payload | Local frontend; alternate backend host later | $0 |
-| GitHub Actions | Standard runners in public repo | Official docs and account access | Public GitHub repository | Remote repo creation unavailable in current tooling | Run tests locally until remote exists | $0 |
+| GitHub Actions | Standard runners in public repo | Official docs and account access | Public GitHub repository | CI is not configured yet | Run the same checks locally until CI is added | $0 |
 | Firecrawl | Connected plan | Account balance verified | Credits | Current balance is -107; no crawl should be started | Official web documentation / manual approved source registry | $0 |
 | Google Drive | Connected account | Connector profile verified | Connected Google account | Not a code source of truth; privacy/audit considerations | GitHub and local repository | $0 |
 

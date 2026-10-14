@@ -63,3 +63,15 @@ The local Git working tree is the active source of truth; GitHub becomes the dur
 Status: Accepted, 2026-10-14.
 
 The repository recovery files are the durable handoff mechanism. The Codex desktop environment supports scheduled thread heartbeats, but no automation is created now: there is no current usage interruption to recover from, usage recovery cannot be safely inferred by a polling task, and the brief explicitly forbids wasteful recurring checks. If a real limit interruption occurs and scheduling remains available, create at most one five-hour follow-up only when it can resume this exact thread without repeatedly consuming usage. Otherwise, resume manually by reading the five recovery files and verifying Git state.
+
+## ADR-011: Backend-owned opaque sessions
+
+Status: Accepted, 2026-10-14.
+
+Keep identity authority in FastAPI rather than adding a second Next.js identity database. Hash passwords with `pwdlib` Argon2id and issue random opaque sessions; store only keyed token digests so sessions can be revoked. Next.js Route Handlers act as a backend-for-frontend and place the raw token in a server-set HTTP-only cookie. This keeps the browser and application database credentials separated, supports the planned MongoDB repository, and avoids a hosted identity dependency during zero-cost local development. Re-evaluate hosted identity, MFA, and account recovery before public deployment.
+
+## ADR-012: PyMongo Async conditional persistence
+
+Status: Accepted conditionally, 2026-10-14.
+
+Use the official PyMongo Async driver behind the identity repository interface when `MONGODB_URI` is present. Keep deterministic tests on the in-memory adapter. Production must fail closed without MongoDB; live Atlas connectivity and account permissions remain an external validation gate.

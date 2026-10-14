@@ -8,11 +8,11 @@ Acceptance criteria: environment facts recorded; architecture and cost baseline 
 
 Acceptance criteria: FastAPI health/config API and a Next.js TypeScript App Router shell styled with Tailwind CSS run locally; lint, typecheck, unit tests, and production builds pass without cloud credentials.
 
-## Milestone 3 — Identity and persistence
+## Milestone 3 — Identity and persistence (complete locally)
 
 Acceptance criteria: secure password hashing or an approved external identity flow; role checks; Atlas integration tests where available; pagination, indexes, retention fields, and audit events documented.
 
-## Milestone 4 — Knowledge ingestion and retrieval
+## Milestone 4 — Knowledge ingestion and retrieval (next)
 
 Acceptance criteria: approved-source registry; safe PDF/text extraction; normalization, chunking, metadata, deduplication, embeddings, retrieval, and citation traceability; deterministic retrieval metrics with a small curated corpus.
 

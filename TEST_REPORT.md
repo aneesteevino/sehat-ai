@@ -2,19 +2,21 @@
 
 Last run: 2026-10-14 (Asia/Karachi)
 
-## Milestone 2 results
+## Milestone 3 results
 
 | Check | Result | Evidence |
 |---|---|---|
 | Backend lint | Pass | Ruff: all checks passed |
-| Backend unit/API tests | Pass | 7 passed in 0.72s |
-| Frontend component/page tests | Pass | 2 suites, 3 tests |
+| Backend unit/API/repository tests | Pass | 23 passed |
+| Frontend component/request tests | Pass | 4 suites, 8 tests |
 | Frontend lint | Pass | ESLint, zero warnings |
 | Frontend typecheck | Pass | TypeScript `--noEmit` |
-| Frontend production build | Pass | Next.js 16.4, `/` statically prerendered |
-| Runtime page | Pass | HTTP 200; expected heading present |
-| Runtime API | Pass | HTTP 200; typed readiness payload; request ID preserved |
-| Runtime CORS | Pass | Preflight HTTP 200 for the temporary smoke-test origin |
+| Frontend production build | Pass | Next.js 16.4; public/auth pages static; auth handlers and workspace dynamic |
+| Runtime registration | Pass | Next.js BFF and FastAPI returned HTTP 201 |
+| Runtime protected page | Pass | HTTP 200 with authenticated identity rendered |
+| Runtime logout/revocation | Pass | Logout HTTP 200; old token rejected by FastAPI with 401; workspace redirected |
+| Cookie boundary | Pass | Production cookie was Secure, HTTP-only, SameSite=Strict, host-prefixed |
+| Tracked credential scan | Pass | No selected credential-pattern matches |
 | Production npm audit | Pass | 0 production vulnerabilities |
 
 ## Known warnings
@@ -24,4 +26,4 @@ Last run: 2026-10-14 (Asia/Karachi)
 
 ## Runtime verification scope
 
-The verified story was: statically rendered Next.js page → hydrated `ApiStatus` client component → FastAPI `GET /health/ready` → typed response and CORS headers. No database or AI service is part of Milestone 2.
+The verified story was: Next.js registration Route Handler → FastAPI identity service → Argon2id account and opaque session in the local repository → production-cookie response → server-rendered protected workspace → logout revocation → rejected token. The MongoDB adapter was unit tested but no live Atlas service was available.

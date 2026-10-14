@@ -4,7 +4,7 @@ Last updated: 2026-10-14 (Asia/Karachi)
 
 ## Phase
 
-Milestone 2 complete and verified: runnable FastAPI and Next.js foundations. Milestone 3 (identity and persistence) is next.
+Milestone 3 complete and verified locally: identity, authorization, browser session boundary, and conditional persistence. Milestone 4 (knowledge ingestion and retrieval) is next.
 
 ## Completed and verified
 
@@ -22,15 +22,19 @@ Milestone 2 complete and verified: runnable FastAPI and Next.js foundations. Mil
 - FastAPI foundation implemented with typed settings, production secret validation, JSON logging, request IDs, constrained CORS, and liveness/readiness endpoints.
 - Next.js 16.4 frontend implemented with TypeScript 6.0, App Router server components, a narrow client readiness component, and Tailwind CSS 4.
 - Local unit, lint, type, production-build, and runtime smoke checks passed.
+- Backend identity implements Argon2id password hashing, normalized accounts, opaque revocable sessions, patient/clinician/admin roles, negative authorization tests, and versioned auth routes.
+- Next.js implements accessible sign-up/sign-in pages, an authenticated server-rendered workspace, and same-origin auth Route Handlers with Secure HTTP-only cookies in production.
+- The repository boundary has a concurrency-safe local adapter and a conditional official PyMongo Async adapter. Unique identity indexes and session TTL cleanup are defined.
+- Database schema, pagination, retention, audit-event plan, security baseline, and identity API contracts are documented.
 
 ## Partially completed
 
-- The technology choices beyond the application shell remain conditional on database and hosted inference account testing.
-- Authentication and persistence architecture is planned but not implemented.
+- Live Atlas connectivity and account-specific permissions remain conditional; the adapter is unit tested without a network connection.
+- Authentication is an MVP foundation; rate limiting, verified email, recovery, MFA decision, and persistent audit events remain pre-deployment work.
 
 ## Not started
 
-- Authentication, database integration, LLM integration, RAG, ingestion, workflows, evaluation, and deployment.
+- LLM integration, RAG, ingestion, controlled workflows, evaluation, and deployment.
 - Clinical/domain review; this is mandatory before any claim of medical readiness.
 
 ## Current architecture
@@ -44,12 +48,13 @@ See `ARCHITECTURE.md`. In short: Vercel-ready Next.js App Router frontend with T
 - Foundation milestone commit: `c538338` (`chore: establish Sehat AI project foundation`).
 - Phase 0 findings commit: `bdd5ba6` (`docs: record verified phase zero findings`).
 - Milestone 2 implementation commit: `4de580a` (`feat: add Next.js and FastAPI foundations`).
+- Milestone 2 checkpoint commit: `0426ac3` (`docs: record milestone 2 checkpoint`).
 
 ## Test status
 
-- Backend: 7 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
-- Frontend: 3 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed and prerendered `/` statically.
-- Runtime smoke: Next.js returned HTTP 200; FastAPI readiness returned HTTP 200 with the typed contract and request ID; configured CORS preflight returned HTTP 200.
+- Backend: 23 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
+- Frontend: 8 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed with static public/auth pages and dynamic auth/workspace routes.
+- Runtime smoke: registration returned 201, the protected workspace rendered the authenticated identity, logout returned 200, and reuse of the revoked session redirected to sign-in. FastAPI observed the final token as 401.
 - Production npm dependency audit: 0 known vulnerabilities. Development-only audit currently reports 19 moderate and 5 high transitive advisories in current Jest and Next ESLint tooling; npm's proposed fixes are unsafe major downgrades, so these are documented rather than forced.
 
 ## Deployment status
@@ -58,9 +63,9 @@ Not deployed. Vercel project access is blocked by connector scope authorization.
 
 ## Storage status
 
-- Free on C: after Milestone 2: 98.83 GiB.
+- Free on C: after Milestone 3 verification: 83.01 GiB. The larger host-level decrease is not attributable to the project, whose footprint grew by about 25 MiB.
 - Project budget: no more than 50 GB; near-term target below 2 GB excluding package caches.
-- Project footprint including local dependencies/build output: approximately 586.74 MiB (`.venv` 71.65 MiB, `node_modules` 489.34 MiB, `.next` 25.02 MiB).
+- Project footprint including local dependencies/build output: approximately 611.62 MiB (`.venv` 82.01 MiB, `node_modules` 489.34 MiB, `.next` 39.24 MiB).
 - No models or datasets have been downloaded.
 
 ## Known limitations
@@ -69,3 +74,4 @@ Not deployed. Vercel project access is blocked by connector scope authorization.
 - Hugging Face free-user hosted inference credits are experimental-scale, not a dependable production budget.
 - The selected local embedding and reranking models have not yet been downloaded or benchmarked.
 - No healthcare feature is clinically validated.
+- No live Atlas integration test has run; local identities are intentionally lost when the API restarts without `MONGODB_URI`.

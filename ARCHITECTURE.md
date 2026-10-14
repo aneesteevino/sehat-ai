@@ -5,13 +5,14 @@
 ```text
 Browser
   -> Next.js App Router UI + Tailwind CSS (Vercel candidate)
+      -> same-origin auth Route Handlers (HTTP-only session cookie)
       -> FastAPI application service (portable hosting)
-          -> Auth/RBAC and audit layer
+          -> identity service -> Argon2id + opaque revocable sessions + RBAC
           -> Safety policy engine (deterministic)
           -> LLM provider interface -> mock / verified hosted provider
           -> RAG service -> embeddings -> vector + keyword retrieval
           -> Document service -> isolated extraction and validation
-          -> MongoDB repository interface -> Atlas / test adapter
+          -> repository interfaces -> PyMongo Async Atlas / in-memory test adapter
 ```
 
 ## Trust boundaries
@@ -21,6 +22,7 @@ Browser
 - Retrieved text cannot issue application instructions or select tools.
 - LLM responses are untrusted until schema, safety, and citation validation pass.
 - Only application-controlled code may authorize database writes or workflow transitions.
+- Browser JavaScript never receives the raw session token; Next.js forwards it server-side.
 
 ## Core domain modules
 
@@ -48,3 +50,5 @@ If evidence is insufficient, the response must abstain from unsupported medical 
 ## Deployment posture
 
 The Next.js frontend uses server components by default and small client components only where browser state or interactivity is required. Tailwind CSS is the styling system; global CSS is limited to design tokens and document defaults. The frontend can use Vercel. The backend stays portable until file upload, duration, cold-start, model loading, and zero-cost constraints are tested. Large files should eventually use direct object-storage uploads rather than transit through a Vercel Function; no storage provider is selected yet.
+
+Production identity persistence requires MongoDB and fails closed when its URI or the authentication secret is absent. Local tests use an injected in-memory repository. See `DATABASE_SCHEMA.md`, `SECURITY.md`, and `API_DOCUMENTATION.md`.

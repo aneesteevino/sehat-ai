@@ -2,43 +2,44 @@
 
 ## Exact next task
 
-Milestone 3: design and implement identity and persistence behind repository/service interfaces, without making Atlas a prerequisite for unit tests.
+Milestone 4: implement a small, approved-source knowledge ingestion and retrieval slice without downloading large models or using real patient data.
 
 ## Files and components
 
-- `application/backend/src/sehat_api/identity/`: password hashing, session/token contracts, roles, and authorization policies.
-- `application/backend/src/sehat_api/repositories/`: protocols plus an in-memory test adapter and conditional MongoDB adapter.
-- `application/backend/src/sehat_api/api/`: versioned identity routes and consistent error contracts.
-- `application/frontend/app/`: sign-in and role-aware shell routes using server-first App Router patterns.
-- `tests/`: deterministic identity, authorization, repository, and API tests.
-- `DATABASE_SCHEMA.md` and security documentation.
+- `data/`: approved source registry and tiny synthetic/public test fixtures with provenance and license metadata.
+- `application/backend/src/sehat_api/knowledge/`: source, version, chunk, deletion, and ingestion contracts.
+- `ai/`: deterministic development embedding interface, retrieval service, citation/evidence bundle, and optional local model adapter.
+- `application/backend/src/sehat_api/repositories/`: knowledge repository protocol plus memory adapter; Atlas Vector Search stays conditional.
+- `tests/`: extraction, normalization, deduplication, retrieval, citation traceability, and prompt-injection boundary tests.
+- Retrieval evaluation and data-governance documentation.
 
 ## Prerequisites
 
 1. Inspect this status file and `BLOCKERS.md`.
 2. Confirm `main` is synchronized with `origin/main`.
 3. Recheck C: free space before adding dependencies.
-4. Select a password hashing library and token/session design after current security guidance review.
-5. Keep MongoDB behind an interface until Atlas access is available.
+4. Approve a minimal public-domain or appropriately licensed source set and record exact versions.
+5. Benchmark a deterministic lightweight embedding path before downloading any candidate model.
+6. Keep Atlas Vector Search behind an interface until live Atlas access is available.
 
 ## Planned commands
 
-Exact dependency changes must be reviewed and pinned during the milestone. Do not paste tokens, connection strings, or signing secrets into the shell.
+Review and pin any parser or embedding dependency before installation. Do not fetch a full medical dataset or model checkpoint until its license, size, and need are recorded.
 
 ## Expected outcome
 
-- Users can be created and authenticated using secure password hashing in the local test adapter.
-- Role-based authorization is enforced in application code and covered by negative tests.
-- Persistence contracts support an Atlas implementation without coupling domain logic to the driver.
-- Production configuration continues to fail closed when required secrets are absent.
+- A small approved document can be normalized, chunked, deduplicated, embedded through an interface, retrieved, and cited to its exact source/version/location.
+- Tests remain deterministic and free of external-provider calls.
+- Retrieved text remains data and cannot select tools or override application policy.
+- Retrieval quality has a reproducible baseline rather than an anecdotal demo.
 
 ## Verification
 
-- Run identity and authorization unit/API tests.
+- Run ingestion, retrieval, citation, and adversarial-boundary tests.
 - Run Next.js unit tests, typecheck, ESLint, and the production build.
 - Scan tracked files for common secret patterns.
 - Record package sizes and updated free disk space.
-- Update all five recovery files, then commit the verified milestone.
+- Update recovery files, then commit and push the verified milestone.
 
 ## Remaining blockers
 

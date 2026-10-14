@@ -6,7 +6,7 @@ Sehat AI is a safety-first healthcare knowledge and assistance platform under in
 
 ## Current state
 
-Phase 0 (environment validation and repository foundation) is complete locally. No application feature is represented as operational yet. See [PROJECT_STATUS.md](PROJECT_STATUS.md) and [NEXT_STEPS.md](NEXT_STEPS.md).
+Milestone 3 is complete locally: the Next.js App Router interface, FastAPI identity API, revocable local sessions, role policies, and conditional MongoDB adapter are implemented. Healthcare and AI features are not operational. See [PROJECT_STATUS.md](PROJECT_STATUS.md) and [NEXT_STEPS.md](NEXT_STEPS.md).
 
 ## Planned architecture
 
@@ -18,6 +18,8 @@ Phase 0 (environment validation and repository foundation) is complete locally. 
 - Evidence records and citation validation as first-class domain objects.
 
 The authoritative architecture is documented in [ARCHITECTURE.md](ARCHITECTURE.md).
+
+Identity details are documented in [SECURITY.md](SECURITY.md), [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md), and [API_DOCUMENTATION.md](API_DOCUMENTATION.md).
 
 ## Repository layout
 

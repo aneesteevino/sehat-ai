@@ -30,9 +30,7 @@ export default function Home() {
           <span className="grid size-10 place-items-center rounded-[13px] bg-teal-700 text-white shadow-lg shadow-teal-900/15" aria-hidden="true">S</span>
           <span>Sehat AI</span>
         </a>
-        <span className="rounded-full border border-emerald-900/15 bg-white/70 px-3 py-2 text-xs font-bold tracking-wider text-slate-600 uppercase max-sm:hidden">
-          Foundation preview
-        </span>
+        <a className="rounded-full border border-emerald-900/15 bg-white/70 px-4 py-2 text-sm font-bold text-emerald-950 outline-none hover:bg-white focus-visible:ring-3 focus-visible:ring-amber-400" href="/sign-in">Sign in</a>
       </header>
 
       <main id="top">
@@ -53,9 +51,9 @@ export default function Home() {
           </div>
 
           <aside className="rounded-3xl border border-emerald-900/15 bg-white/80 p-7 shadow-2xl shadow-emerald-950/10 backdrop-blur-md" aria-label="Development status">
-            <p className="mb-3 text-xs font-extrabold tracking-[0.13em] text-teal-700 uppercase">Milestone 2</p>
-            <h2 className="mb-2 text-2xl font-bold text-emerald-950">Local system foundation</h2>
-            <p className="mb-5 leading-6 text-slate-600">The interface and typed health API run without database or AI credentials.</p>
+            <p className="mb-3 text-xs font-extrabold tracking-[0.13em] text-teal-700 uppercase">Milestone 3</p>
+            <h2 className="mb-2 text-2xl font-bold text-emerald-950">Identity foundation</h2>
+            <p className="mb-5 leading-6 text-slate-600">Secure local accounts and revocable sessions run without database or AI credentials.</p>
             <ApiStatus />
             <dl className="mt-5">
               {[['AI generation', 'Not enabled'], ['Patient data', 'Not collected'], ['Clinical status', 'Not validated']].map(([term, detail]) => (

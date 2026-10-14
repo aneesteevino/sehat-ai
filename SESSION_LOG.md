@@ -77,3 +77,34 @@ Repository foundation verified and committed locally on branch `main` as `c53833
 ### Stopping point
 
 Milestone 2 is implemented and verified in commit `4de580a`. A generated editable-install `.egg-info` directory was caught during the pre-push review, removed, ignored, and excluded from the amended commit. Next: push the milestone and this recovery checkpoint, then begin Milestone 3 identity and persistence.
+
+## 2026-10-14 — Milestone 3 identity and persistence
+
+### Identity and API
+
+- Added normalized patient registration, Argon2id password hashing, generic credential failures, dummy-hash timing mitigation, active-account checks, and patient/clinician/admin authorization policy.
+- Added random opaque sessions whose HMAC digests—not raw bearer values—are persisted, with absolute expiry and explicit logout revocation.
+- Added versioned register, login, current-user, and logout endpoints.
+
+### Persistence
+
+- Added repository protocols and a concurrency-safe in-memory adapter for development and deterministic tests.
+- Added a conditional official PyMongo Async adapter with unique email/token indexes, user/session lookup indexes, and automatic session TTL cleanup.
+- Production now fails closed without both a strong auth secret and MongoDB configuration. Live Atlas access was not available, so no remote database was created or modified.
+
+### Frontend
+
+- Added accessible sign-up and sign-in pages, a server-rendered authenticated workspace, and sign-out flow.
+- Added Next.js auth Route Handlers as a backend-for-frontend. Session tokens are server-only HTTP-only cookies; mutation requests enforce same-origin signals, JSON content, and an 8 KiB body ceiling.
+
+### Verification
+
+- Ruff passed; pytest passed 23 tests.
+- Jest passed 8 tests; ESLint and TypeScript passed; the Next.js production build passed.
+- End-to-end local runtime passed registration, authenticated workspace rendering, logout, and revoked-session rejection.
+- Production npm audit reported zero vulnerabilities; conservative tracked-file credential scan found no matches.
+
+### Storage and stopping point
+
+- Project footprint is approximately 611.62 MiB. C: reported 83.01 GiB free; the project remains far below its 50 GB ceiling and no model or dataset was downloaded.
+- Milestone 4 knowledge ingestion and retrieval is next. Atlas, Vercel project scope, hosted inference, and clinical review blockers remain open.
