@@ -1,6 +1,6 @@
 # Security Baseline
 
-Last updated: 2026-10-14 (Asia/Karachi).
+Last updated: 2026-10-15 (Asia/Karachi).
 
 This is an engineering baseline, not a claim of clinical, privacy, or production certification.
 
@@ -44,3 +44,17 @@ The current controls address plaintext password exposure, stolen database sessio
 - The retrieval endpoint returns evidence only and sets `generated_answer` to null. Retrieved instructions have no path to tools or policy.
 - Evidence queries use same-origin JSON POST requests so potentially sensitive text does not enter URLs, browser history, or ordinary access logs.
 - Arbitrary PDF uploads remain prohibited until parsing is isolated and malware/resource controls are added.
+
+## Grounded generation controls
+
+- Generation is authenticated, retrieval-first, and limited to the approved offline corpus.
+- Rank and substantive-overlap gates abstain before the provider when evidence is inadequate.
+- Common direct and indirect instruction markers are rejected in questions, retrieved chunks, claims, and uncertainty text. Pattern matching is explicitly not treated as a complete prompt-injection defense.
+- Provider output is an untrusted strict object. Extra fields, missing fields, forged evidence IDs, non-extractive claims, and unsafe output fail closed.
+- The current provider has no network, database, filesystem, or tool capability and cannot cause side effects.
+- The application, not the provider, owns authorization, the medical safety notice, retry limits, and release decision.
+- Output is rendered as escaped plain text; raw HTML and model-authored Markdown are not used.
+- Usage records contain operational numbers and identifiers only, never question/evidence/answer content.
+- The browser path uses bounded same-origin JSON POSTs and non-cacheable responses.
+
+These controls implement a narrow evaluation baseline. They do not prove resistance to persistent prompt injection or medical groundedness. Broader adversarial evaluation and qualified clinical review remain required.

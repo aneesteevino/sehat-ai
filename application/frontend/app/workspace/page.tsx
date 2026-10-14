@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 
 import { SignOutButton } from '@/components/sign-out-button'
 import { EvidenceSearch } from '@/components/evidence-search'
+import { GroundedAnswer } from '@/components/grounded-answer'
 import { currentUser } from '@/lib/auth'
 
 const roleLabels = { patient: 'Patient', clinician: 'Clinician', admin: 'Administrator' } as const
@@ -34,6 +35,7 @@ export default async function WorkspacePage() {
             <p className="mt-2 text-sm leading-6 text-amber-900/75">No diagnosis, prescribing, clinical interpretation, or emergency response is enabled.</p>
           </article>
         </div>
+        <GroundedAnswer />
         <EvidenceSearch />
       </section>
     </main>

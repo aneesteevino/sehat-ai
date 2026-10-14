@@ -134,3 +134,28 @@ Milestone 2 is implemented and verified in commit `4de580a`. A generated editabl
 
 - Project footprint is approximately 625.59 MiB; no model weights or large datasets were downloaded. C: reported 58.89 GiB free, with the host-level decrease occurring outside this project.
 - Milestone 4 was committed as `2b0dba7` and pushed to the verified `aneesteevino/sehat-ai` repository. Milestone 5 grounded answer generation is next. Atlas, Vercel project scope, hosted inference, arbitrary upload isolation, and clinical review blockers remain open.
+
+## 2026-10-15 — Milestone 5 grounded answer generation
+
+### Generation contract
+
+- Added a provider-neutral FastAPI generation module with a deterministic zero-cost mock, strict structured output, bounded timeout/retry, and process-local content-free usage records.
+- Enforced retrieval before generation, rank plus substantive-overlap adequacy, deterministic abstention, evidence-ID allow-listing, extractive claim support, and common direct/indirect instruction-marker rejection.
+- Kept authorization, medical safety text, release decisions, and all side-effect authority outside the provider. Partial streaming remains disabled until the complete object can be safely validated.
+
+### Product surface
+
+- Added an authenticated `/api/v1/answers` route and a same-origin Next.js `/api/answers` proxy with bounded JSON handling, server-only session forwarding, and no-store responses.
+- Added an accessible workspace preview that visibly separates claims, evidence links, uncertainty, safety limitations, and transparent zero-cost provider metadata.
+
+### Verification
+
+- Ruff passed; pytest passed 47 tests covering schema, missing evidence, forged citations, invented claims, timeout, retry, injection markers, abstention, authentication, and usage accounting.
+- Jest passed 12 tests; TypeScript, ESLint, production npm audit, and the Next.js production build passed.
+- End-to-end runtime passed registration, login, server-only cookie forwarding, retrieval-to-answer, exact claim/evidence binding, zero mock cost, and no-store caching. Browser verification then caught and corrected a weak sentence-order choice; the final selector prioritizes requested duration evidence and returns only the strongest extractive claim.
+- No hosted inference call, model download, paid resource, Atlas operation, or real patient data was used.
+- Final footprint was approximately 708.16 MiB with 59.50 GiB free on C: after browser and production-build caches; no model or dataset was downloaded.
+
+### Stopping point
+
+Milestone 5 implementation is ready for commit and push. Milestone 6 controlled workflows is next; deployment authorization, live Atlas, hosted inference, arbitrary upload isolation, and clinical review blockers remain open.

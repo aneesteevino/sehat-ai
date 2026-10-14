@@ -26,6 +26,9 @@ class Settings(BaseSettings):
     auth_secret: SecretStr | None = None
     session_ttl_minutes: int = 60
     knowledge_registry_path: Path = Path("data/source_registry/sources.json")
+    generation_minimum_score: float = 0.13
+    generation_timeout_seconds: float = 8.0
+    generation_max_attempts: int = 2
 
     @model_validator(mode="after")
     def require_production_secrets(self) -> "Settings":
@@ -40,6 +43,12 @@ class Settings(BaseSettings):
                 raise ValueError("MONGODB_URI is required when APP_ENV=production")
         if not 5 <= self.session_ttl_minutes <= 10_080:
             raise ValueError("SESSION_TTL_MINUTES must be between 5 and 10080")
+        if not 0 <= self.generation_minimum_score <= 1:
+            raise ValueError("GENERATION_MINIMUM_SCORE must be between 0 and 1")
+        if not 0.1 <= self.generation_timeout_seconds <= 60:
+            raise ValueError("GENERATION_TIMEOUT_SECONDS must be between 0.1 and 60")
+        if not 1 <= self.generation_max_attempts <= 3:
+            raise ValueError("GENERATION_MAX_ATTEMPTS must be between 1 and 3")
         return self
 
 

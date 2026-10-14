@@ -2,45 +2,44 @@
 
 ## Exact next task
 
-Milestone 5: implement grounded answer generation behind a provider interface, using a deterministic mock first and keeping real hosted inference optional.
+Milestone 6: implement controlled, deterministic healthcare workflows without granting the generation provider tools or autonomous actions.
 
 ## Files and components
 
-- `application/backend/src/sehat_api/generation/`: provider protocol, deterministic mock, timeout/retry policy, structured output schema, and usage accounting.
-- `application/backend/src/sehat_api/api/`: authenticated answer route that always retrieves evidence before generation.
-- `application/frontend/`: answer preview that visibly separates answer, evidence, uncertainty, and safety limitations.
-- `tests/`: schema failures, missing evidence, citation integrity, timeout, retry, prompt injection, abstention, and cost accounting.
-- Grounded-answer and provider-operation documentation.
+- `application/backend/src/sehat_api/safety/`: deterministic red-flag classification, application-owned escalation responses, and tested policy ordering before retrieval/generation.
+- `application/backend/src/sehat_api/workflows/`: typed symptom-questionnaire and document-explanation state machines with explicit allowed transitions.
+- `application/backend/src/sehat_api/audit/`: content-minimized security/workflow event contract and in-memory test adapter.
+- `application/backend/src/sehat_api/api/`: authenticated workflow endpoints with role checks and bounded inputs.
+- `application/frontend/`: accessible guided workflow surfaces that remain visibly distinct from diagnosis or prescribing.
+- `tests/`: red-flag precedence, state-transition rejection, authorization, injection, replay/idempotency, audit minimization, and safe failure tests.
 
 ## Prerequisites
 
-1. Inspect this status file and `BLOCKERS.md`.
-2. Confirm `main` is synchronized with `origin/main`.
-3. Recheck C: free space before adding dependencies.
-4. Define the answer schema and deterministic abstention rules before selecting a provider.
-5. Use a mock provider for all automated tests and measure the complete retrieval-to-answer contract.
-6. Inspect current hosted-provider availability only if a real smoke test becomes necessary; do not enable billing.
-
-## Planned commands
-
-Do not add an agent framework or download a local generator. Review and pin any provider SDK only after its necessity, current version, free allowance, and fallback are recorded.
+1. Read the recovery files and confirm `main` is synchronized with `origin/main`.
+2. Recheck disk space; do not add a model, agent framework, or paid dependency.
+3. Define red-flag categories and application-owned output text before implementing any workflow.
+4. Keep emergency routing deterministic and earlier than retrieval or generation.
+5. Use synthetic, explicitly labeled workflow fixtures only; do not use real patient data.
+6. Do not enable document uploads; arbitrary-file isolation remains unresolved.
 
 ## Expected outcome
 
-- Every generated claim is tied to supplied evidence IDs and validated against the retrieval bundle.
-- Missing or inadequate evidence produces a deterministic abstention rather than an unsupported answer.
-- Provider output is schema-validated, bounded by timeout/retry policy, and usage is recorded without sensitive content.
-- Tests remain deterministic and make no paid or external inference calls.
+- Red-flag inputs bypass generation and return a stable escalation contract.
+- Workflow steps and transitions are allow-listed in application code; model text cannot select tools or authorize state changes.
+- Symptom collection remains a questionnaire, not diagnosis, and document explanation remains limited to synthetic structured facts.
+- Security/workflow audit events contain identifiers and decisions, not symptom text, document contents, or model output.
+- Automated tests are deterministic and make no paid or external calls.
 
 ## Verification
 
-- Run generation schema, grounding, abstention, timeout, citation, and adversarial-boundary tests.
-- Run Next.js unit tests, typecheck, ESLint, and the production build.
-- Scan tracked files for common secret patterns.
-- Record package sizes and updated free disk space.
+- Run safety precedence, transition, role, audit-minimization, injection, and negative-path tests.
+- Run the existing retrieval/generation regression suites.
+- Run Next.js unit tests, typecheck, ESLint, production build, and the complete local runtime path.
+- Scan tracked files for common secret patterns; record storage and free disk space.
 - Update recovery files, then commit and push the verified milestone.
 
 ## Remaining blockers
 
 - Vercel project scope needs reconnection or corrected authorization before deployment work.
 - MongoDB Atlas and Hugging Face account inspection require usable connectors or user-provided configuration through secure environment settings.
+- Clinical, legal, and privacy review remain mandatory before any real-world health use.

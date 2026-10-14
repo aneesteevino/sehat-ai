@@ -1,23 +1,25 @@
 # Test Report
 
-Last run: 2026-10-14 (Asia/Karachi)
+Last run: 2026-10-15 (Asia/Karachi)
 
-## Milestone 4 results
+## Milestone 5 results
 
 | Check | Result | Evidence |
 |---|---|---|
 | Backend lint | Pass | Ruff: all checks passed |
-| Backend unit/API/repository/retrieval tests | Pass | 34 passed |
-| Frontend component/request tests | Pass | 5 suites, 10 tests |
+| Backend unit/API/repository/retrieval/generation tests | Pass | 47 passed |
+| Frontend component/request tests | Pass | 6 suites, 12 tests |
 | Frontend lint | Pass | ESLint, zero warnings |
 | Frontend typecheck | Pass | TypeScript `--noEmit` |
-| Frontend production build | Pass | Next.js 16.4; evidence BFF and workspace dynamically rendered |
+| Frontend production build | Pass | Next.js 16.4; evidence/answer BFF routes and workspace dynamically rendered |
 | Retrieval baseline | Pass | 2 sources, 5 chunks, 4 queries; Recall@2 1.00; MRR 1.00 |
 | Text/PDF boundaries | Pass | Path, type, NUL, encryption, page/stream/text bounds covered |
-| Runtime evidence flow | Pass | Authenticated workspace and BFF search HTTP 200; expected source ranked first |
-| Evidence safety contract | Pass | Versioned locator, untrusted marker, null answer, no-store response |
+| Runtime answer flow | Pass | Registration/login and authenticated answer BFF passed; answer bound to returned evidence |
+| Generation safety contract | Pass | Retrieval-first, abstention, schema rejection, forged-citation rejection, extractive support, injection markers, timeout/retry |
+| Usage/cost contract | Pass | Content-free record; mock provider; USD 0; no external call |
 | Tracked credential scan | Pass | No selected credential-pattern matches |
 | Production npm audit | Pass | 0 production vulnerabilities |
+| Repository whitespace check | Pass | `git diff --check` |
 
 ## Known warnings
 
@@ -26,4 +28,4 @@ Last run: 2026-10-14 (Asia/Karachi)
 
 ## Runtime verification scope
 
-The verified story was: reviewed checksum-pinned fixture → bounded extraction → normalization and paragraph chunks → deterministic lexical vectors → hybrid retrieval → versioned evidence citation → authenticated FastAPI endpoint → server-only Next.js BFF → accessible workspace search. No answer model, provider call, model download, Atlas service, or real patient data was used.
+The verified story was: reviewed checksum-pinned fixture → bounded extraction → deterministic retrieval → adequacy and instruction gates → zero-cost mock provider → strict schema/evidence-ID/extractive validation → authenticated FastAPI endpoint → server-only Next.js BFF → accessible answer/evidence/uncertainty/safety display. No hosted LLM call, model download, Atlas service, or real patient data was used.

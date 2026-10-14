@@ -87,3 +87,11 @@ Ingest only reviewed, local, checksum-pinned fixtures whose provenance, version 
 Status: Accepted as baseline, 2026-10-14.
 
 Use a pure-Python signed lexical hashing provider and hybrid overlap ranker for the first retrieval contract. It adds no model weight, provider call, or cost and establishes deterministic Recall@k/MRR and citation tests. Keep `all-MiniLM-L6-v2` as an unevaluated candidate; download it only if a broader dataset can demonstrate material quality improvement within the storage and latency budget.
+
+## ADR-015: Validate complete extractive answers before release
+
+Status: Accepted as Milestone 5 baseline, 2026-10-15.
+
+Keep generation authority in FastAPI behind a small provider protocol. Use the deterministic zero-cost mock until a real provider's access, model, SDK version, quota, and fallback are verified. A response is released only after retrieval adequacy, strict schema, exact evidence-ID membership, extractive claim support, and instruction-marker checks pass. Keep application-owned uncertainty and safety boundaries outside the provider. Do not stream partial output until an equivalent safe release design exists.
+
+This deliberately avoids adding a TypeScript AI SDK to the Next.js browser path: the existing architecture assigns provider secrets, retrieval, usage accounting, and medical safety checks to FastAPI. A future provider adapter must preserve that boundary.

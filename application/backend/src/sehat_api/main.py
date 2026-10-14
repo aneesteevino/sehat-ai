@@ -11,9 +11,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from sehat_api import __version__
+from sehat_api.api.answers import router as answers_router
 from sehat_api.api.identity import router as identity_router
 from sehat_api.api.knowledge import router as knowledge_router
 from sehat_api.config import Settings, get_settings
+from sehat_api.generation.provider import MockGenerationProvider
+from sehat_api.generation.service import GenerationService
+from sehat_api.generation.usage import InMemoryUsageLedger
 from sehat_api.identity.service import IdentityService
 from sehat_api.knowledge.embeddings import HashingEmbeddingProvider
 from sehat_api.knowledge.ingestion import IngestionService
@@ -57,6 +61,15 @@ def create_app(
     embeddings = HashingEmbeddingProvider()
     ingestion_service = IngestionService(active_knowledge_repository, embeddings)
     retrieval_service = RetrievalService(active_knowledge_repository, embeddings)
+    usage_ledger = InMemoryUsageLedger()
+    generation_service = GenerationService(
+        retrieval_service,
+        MockGenerationProvider(),
+        usage_ledger,
+        minimum_score=active_settings.generation_minimum_score,
+        timeout_seconds=active_settings.generation_timeout_seconds,
+        max_attempts=active_settings.generation_max_attempts,
+    )
 
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
@@ -82,6 +95,8 @@ def create_app(
     api.state.repository_kind = repository_kind
     api.state.knowledge_repository = active_knowledge_repository
     api.state.retrieval_service = retrieval_service
+    api.state.generation_service = generation_service
+    api.state.generation_usage_ledger = usage_ledger
     auth_secret = (
         active_settings.auth_secret.get_secret_value().encode()
         if active_settings.auth_secret
@@ -103,6 +118,7 @@ def create_app(
     )
     api.include_router(identity_router)
     api.include_router(knowledge_router)
+    api.include_router(answers_router)
 
     @api.exception_handler(Exception)
     async def unhandled_exception(request: Request, exc: Exception) -> JSONResponse:

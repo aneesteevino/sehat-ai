@@ -1,10 +1,10 @@
 # Project Status
 
-Last updated: 2026-10-14 (Asia/Karachi)
+Last updated: 2026-10-15 (Asia/Karachi)
 
 ## Phase
 
-Milestone 4 complete and verified locally: approved-source ingestion, deterministic retrieval, versioned citations, and authenticated evidence search. Milestone 5 (grounded answer generation) is next.
+Milestone 5 complete and verified locally: retrieval-first deterministic answer generation, strict grounding validation, abstention, and an authenticated answer preview. Milestone 6 (controlled workflows) is next.
 
 ## Completed and verified
 
@@ -30,16 +30,20 @@ Milestone 4 complete and verified locally: approved-source ingestion, determinis
 - Bounded UTF-8 and PDF extraction, Unicode normalization, paragraph-aware chunking, content/version deduplication, and immutable citation locators are implemented.
 - A zero-download 256-dimensional lexical hashing provider and hybrid ranker establish a deterministic five-chunk baseline: Recall@2 1.00 and MRR 1.00 across four test queries.
 - Authenticated FastAPI and Next.js evidence-search endpoints return versioned, non-cacheable, explicitly untrusted evidence with no generated medical answer.
+- A provider-neutral generation service now enforces retrieval adequacy, bounded timeout/retry, strict output schemas, evidence-ID allow-listing, extractive support, common instruction-marker checks, and content-free usage accounting.
+- The active `mock/deterministic-evidence-v1` provider makes no external call, downloads no model, costs USD 0, and deterministically selects sentences from eligible evidence.
+- Authenticated FastAPI and Next.js answer endpoints return either validated claims with exact citations or deterministic abstention. The accessible UI separates answer, evidence, uncertainty, and application-owned safety limitations.
 
 ## Partially completed
 
 - Live Atlas connectivity and account-specific permissions remain conditional; the adapter is unit tested without a network connection.
 - Authentication is an MVP foundation; rate limiting, verified email, recovery, MFA decision, and persistent audit events remain pre-deployment work.
 - The retrieval corpus and evaluation set are intentionally tiny; semantic, multilingual, and medical quality remain unproven.
+- Generation usage records are process-local; no durable operational telemetry exists yet.
 
 ## Not started
 
-- Grounded LLM answer generation, controlled workflows, broader evaluation, and deployment.
+- Real hosted/local LLM integration, controlled workflows, broader evaluation, and deployment.
 - Clinical/domain review; this is mandatory before any claim of medical readiness.
 
 ## Current architecture
@@ -57,12 +61,13 @@ See `ARCHITECTURE.md`. In short: Vercel-ready Next.js App Router frontend with T
 - Milestone 3 implementation commit: `bfceee4` (`feat: add identity and persistence foundation`).
 - Milestone 3 checkpoint commit: `9b048a3` (`docs: record milestone 3 checkpoint`).
 - Milestone 4 implementation commit: `2b0dba7` (`feat: add grounded evidence retrieval`).
+- Milestone 4 checkpoint commit: `726e2ba` (`docs: record milestone 4 checkpoint`).
 
 ## Test status
 
-- Backend: 34 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
-- Frontend: 10 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed with the dynamic evidence BFF route.
-- Runtime smoke: authenticated workspace and evidence search returned HTTP 200; the handwashing query ranked the expected versioned source first, marked it untrusted, returned a paragraph locator, set `generated_answer` to null, and used `Cache-Control: no-store`.
+- Backend: 47 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
+- Frontend: 12 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed with dynamic evidence and answer BFF routes.
+- Runtime smoke: registration and login returned HTTP 201/200; the authenticated answer BFF returned HTTP 200, an extractive answer bound to returned evidence, provider `mock`, cost 0, and `Cache-Control: no-store`.
 - Production npm dependency audit: 0 known vulnerabilities. Development-only audit currently reports 19 moderate and 5 high transitive advisories in current Jest and Next ESLint tooling; npm's proposed fixes are unsafe major downgrades, so these are documented rather than forced.
 
 ## Deployment status
@@ -71,15 +76,16 @@ Not deployed. Vercel project access is blocked by connector scope authorization.
 
 ## Storage status
 
-- Free on C: after Milestone 4 verification: 58.89 GiB. The large host-level decrease occurred outside the project; the project itself grew by about 14 MiB.
+- Free on C: after final Milestone 5 browser/build verification: 59.50 GiB.
 - Project budget: no more than 50 GB; near-term target below 2 GB excluding package caches.
-- Project footprint including local dependencies/build output: approximately 625.59 MiB (`.venv` 85.67 MiB, `node_modules` 489.34 MiB, with the remainder primarily the production build and source files).
+- Project footprint including local dependencies/build output: approximately 708.16 MiB (`.venv` 85.67 MiB, `node_modules` 489.34 MiB, `.next` 131.69 MiB). The temporary development and final production builds increased ignored `.next` cache output; source changes remain small.
 - No models or datasets have been downloaded.
 
 ## Known limitations
 
 - No callable MongoDB Atlas or Hugging Face account connector is exposed in this session.
 - Hugging Face free-user hosted inference credits are experimental-scale, not a dependable production budget.
+- The deterministic generation provider is a software-contract mock, not an LLM; it does not establish hosted-model quality, security, latency, or cost.
 - The selected local embedding and reranking models have not yet been downloaded or benchmarked.
 - No healthcare feature is clinically validated.
 - No live Atlas integration test has run; local identities are intentionally lost when the API restarts without `MONGODB_URI`.

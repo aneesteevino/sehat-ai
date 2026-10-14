@@ -6,7 +6,7 @@ Sehat AI is a safety-first healthcare knowledge and assistance platform under in
 
 ## Current state
 
-Milestone 4 is complete locally: the identity foundation now includes approved-source ingestion, deterministic evidence retrieval, versioned citations, and an authenticated evidence-search preview. Answer generation and clinical features are not operational. See [PROJECT_STATUS.md](PROJECT_STATUS.md) and [NEXT_STEPS.md](NEXT_STEPS.md).
+Milestone 5 is complete locally: the authenticated evaluation preview now retrieves approved evidence, produces deterministic extractive claims through a provider interface, validates citations and support, and abstains when evidence is inadequate. No hosted LLM, model download, or clinical feature is operational. See [PROJECT_STATUS.md](PROJECT_STATUS.md) and [NEXT_STEPS.md](NEXT_STEPS.md).
 
 ## Planned architecture
 
