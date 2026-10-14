@@ -107,4 +107,4 @@ Milestone 2 is implemented and verified in commit `4de580a`. A generated editabl
 ### Storage and stopping point
 
 - Project footprint is approximately 611.62 MiB. C: reported 83.01 GiB free; the project remains far below its 50 GB ceiling and no model or dataset was downloaded.
-- Milestone 4 knowledge ingestion and retrieval is next. Atlas, Vercel project scope, hosted inference, and clinical review blockers remain open.
+- Milestone 3 was committed as `bfceee4` and pushed to the verified `aneesteevino/sehat-ai` repository. Milestone 4 knowledge ingestion and retrieval is next. Atlas, Vercel project scope, hosted inference, and clinical review blockers remain open.
