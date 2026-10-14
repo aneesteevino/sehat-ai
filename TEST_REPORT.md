@@ -14,7 +14,7 @@ Last run: 2026-10-15 (Asia/Karachi)
 | Frontend production build | Pass | Next.js 16.4; evidence/answer BFF routes and workspace dynamically rendered |
 | Retrieval baseline | Pass | 2 sources, 5 chunks, 4 queries; Recall@2 1.00; MRR 1.00 |
 | Text/PDF boundaries | Pass | Path, type, NUL, encryption, page/stream/text bounds covered |
-| Runtime answer flow | Pass | Registration/login and authenticated answer BFF passed; answer bound to returned evidence |
+| Runtime answer flow | Pass | Registration/login and authenticated answer BFF passed; duration claim bound to evidence, all result sections visible, no browser console errors |
 | Generation safety contract | Pass | Retrieval-first, abstention, schema rejection, forged-citation rejection, extractive support, injection markers, timeout/retry |
 | Usage/cost contract | Pass | Content-free record; mock provider; USD 0; no external call |
 | Tracked credential scan | Pass | No selected credential-pattern matches |

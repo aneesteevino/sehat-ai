@@ -158,4 +158,4 @@ Milestone 2 is implemented and verified in commit `4de580a`. A generated editabl
 
 ### Stopping point
 
-Milestone 5 implementation is ready for commit and push. Milestone 6 controlled workflows is next; deployment authorization, live Atlas, hosted inference, arbitrary upload isolation, and clinical review blockers remain open.
+Milestone 5 implementation was committed as `a33a7e7` and pushed to the verified `aneesteevino/sehat-ai` repository. Milestone 6 controlled workflows is next; deployment authorization, live Atlas, hosted inference, arbitrary upload isolation, and clinical review blockers remain open.

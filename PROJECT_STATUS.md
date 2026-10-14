@@ -62,6 +62,7 @@ See `ARCHITECTURE.md`. In short: Vercel-ready Next.js App Router frontend with T
 - Milestone 3 checkpoint commit: `9b048a3` (`docs: record milestone 3 checkpoint`).
 - Milestone 4 implementation commit: `2b0dba7` (`feat: add grounded evidence retrieval`).
 - Milestone 4 checkpoint commit: `726e2ba` (`docs: record milestone 4 checkpoint`).
+- Milestone 5 implementation commit: `a33a7e7` (`feat: add grounded answer generation`).
 
 ## Test status
 
