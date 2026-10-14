@@ -34,3 +34,13 @@ This is an engineering baseline, not a claim of clinical, privacy, or production
 ## Current threat focus
 
 The current controls address plaintext password exposure, stolen database session replay, basic account enumeration, client-side token access, CSRF-style cross-site mutations, mass assignment of privileged roles, and non-durable production startup. They do not yet make the service suitable for real patient data or internet exposure.
+
+## Knowledge ingestion and retrieval controls
+
+- Only checksum-pinned files from the approved source registry are ingested; runtime network fetching is disabled.
+- Text is strict UTF-8 and PDFs are bounded by file size, page count, page-stream size, and extracted-character count. Encrypted and image-only PDFs are rejected.
+- Normalization, chunking, embeddings, ranking, and evaluation are deterministic and require no provider call.
+- Every evidence item is explicitly marked `untrusted` and carries an immutable source version plus page/paragraph locator.
+- The retrieval endpoint returns evidence only and sets `generated_answer` to null. Retrieved instructions have no path to tools or policy.
+- Evidence queries use same-origin JSON POST requests so potentially sensitive text does not enter URLs, browser history, or ordinary access logs.
+- Arbitrary PDF uploads remain prohibited until parsing is isolated and malware/resource controls are added.

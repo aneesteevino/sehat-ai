@@ -2,40 +2,39 @@
 
 ## Exact next task
 
-Milestone 4: implement a small, approved-source knowledge ingestion and retrieval slice without downloading large models or using real patient data.
+Milestone 5: implement grounded answer generation behind a provider interface, using a deterministic mock first and keeping real hosted inference optional.
 
 ## Files and components
 
-- `data/`: approved source registry and tiny synthetic/public test fixtures with provenance and license metadata.
-- `application/backend/src/sehat_api/knowledge/`: source, version, chunk, deletion, and ingestion contracts.
-- `ai/`: deterministic development embedding interface, retrieval service, citation/evidence bundle, and optional local model adapter.
-- `application/backend/src/sehat_api/repositories/`: knowledge repository protocol plus memory adapter; Atlas Vector Search stays conditional.
-- `tests/`: extraction, normalization, deduplication, retrieval, citation traceability, and prompt-injection boundary tests.
-- Retrieval evaluation and data-governance documentation.
+- `application/backend/src/sehat_api/generation/`: provider protocol, deterministic mock, timeout/retry policy, structured output schema, and usage accounting.
+- `application/backend/src/sehat_api/api/`: authenticated answer route that always retrieves evidence before generation.
+- `application/frontend/`: answer preview that visibly separates answer, evidence, uncertainty, and safety limitations.
+- `tests/`: schema failures, missing evidence, citation integrity, timeout, retry, prompt injection, abstention, and cost accounting.
+- Grounded-answer and provider-operation documentation.
 
 ## Prerequisites
 
 1. Inspect this status file and `BLOCKERS.md`.
 2. Confirm `main` is synchronized with `origin/main`.
 3. Recheck C: free space before adding dependencies.
-4. Approve a minimal public-domain or appropriately licensed source set and record exact versions.
-5. Benchmark a deterministic lightweight embedding path before downloading any candidate model.
-6. Keep Atlas Vector Search behind an interface until live Atlas access is available.
+4. Define the answer schema and deterministic abstention rules before selecting a provider.
+5. Use a mock provider for all automated tests and measure the complete retrieval-to-answer contract.
+6. Inspect current hosted-provider availability only if a real smoke test becomes necessary; do not enable billing.
 
 ## Planned commands
 
-Review and pin any parser or embedding dependency before installation. Do not fetch a full medical dataset or model checkpoint until its license, size, and need are recorded.
+Do not add an agent framework or download a local generator. Review and pin any provider SDK only after its necessity, current version, free allowance, and fallback are recorded.
 
 ## Expected outcome
 
-- A small approved document can be normalized, chunked, deduplicated, embedded through an interface, retrieved, and cited to its exact source/version/location.
-- Tests remain deterministic and free of external-provider calls.
-- Retrieved text remains data and cannot select tools or override application policy.
-- Retrieval quality has a reproducible baseline rather than an anecdotal demo.
+- Every generated claim is tied to supplied evidence IDs and validated against the retrieval bundle.
+- Missing or inadequate evidence produces a deterministic abstention rather than an unsupported answer.
+- Provider output is schema-validated, bounded by timeout/retry policy, and usage is recorded without sensitive content.
+- Tests remain deterministic and make no paid or external inference calls.
 
 ## Verification
 
-- Run ingestion, retrieval, citation, and adversarial-boundary tests.
+- Run generation schema, grounding, abstention, timeout, citation, and adversarial-boundary tests.
 - Run Next.js unit tests, typecheck, ESLint, and the production build.
 - Scan tracked files for common secret patterns.
 - Record package sizes and updated free disk space.

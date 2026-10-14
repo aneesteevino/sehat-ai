@@ -2,20 +2,20 @@
 
 Last run: 2026-10-14 (Asia/Karachi)
 
-## Milestone 3 results
+## Milestone 4 results
 
 | Check | Result | Evidence |
 |---|---|---|
 | Backend lint | Pass | Ruff: all checks passed |
-| Backend unit/API/repository tests | Pass | 23 passed |
-| Frontend component/request tests | Pass | 4 suites, 8 tests |
+| Backend unit/API/repository/retrieval tests | Pass | 34 passed |
+| Frontend component/request tests | Pass | 5 suites, 10 tests |
 | Frontend lint | Pass | ESLint, zero warnings |
 | Frontend typecheck | Pass | TypeScript `--noEmit` |
-| Frontend production build | Pass | Next.js 16.4; public/auth pages static; auth handlers and workspace dynamic |
-| Runtime registration | Pass | Next.js BFF and FastAPI returned HTTP 201 |
-| Runtime protected page | Pass | HTTP 200 with authenticated identity rendered |
-| Runtime logout/revocation | Pass | Logout HTTP 200; old token rejected by FastAPI with 401; workspace redirected |
-| Cookie boundary | Pass | Production cookie was Secure, HTTP-only, SameSite=Strict, host-prefixed |
+| Frontend production build | Pass | Next.js 16.4; evidence BFF and workspace dynamically rendered |
+| Retrieval baseline | Pass | 2 sources, 5 chunks, 4 queries; Recall@2 1.00; MRR 1.00 |
+| Text/PDF boundaries | Pass | Path, type, NUL, encryption, page/stream/text bounds covered |
+| Runtime evidence flow | Pass | Authenticated workspace and BFF search HTTP 200; expected source ranked first |
+| Evidence safety contract | Pass | Versioned locator, untrusted marker, null answer, no-store response |
 | Tracked credential scan | Pass | No selected credential-pattern matches |
 | Production npm audit | Pass | 0 production vulnerabilities |
 
@@ -26,4 +26,4 @@ Last run: 2026-10-14 (Asia/Karachi)
 
 ## Runtime verification scope
 
-The verified story was: Next.js registration Route Handler → FastAPI identity service → Argon2id account and opaque session in the local repository → production-cookie response → server-rendered protected workspace → logout revocation → rejected token. The MongoDB adapter was unit tested but no live Atlas service was available.
+The verified story was: reviewed checksum-pinned fixture → bounded extraction → normalization and paragraph chunks → deterministic lexical vectors → hybrid retrieval → versioned evidence citation → authenticated FastAPI endpoint → server-only Next.js BFF → accessible workspace search. No answer model, provider call, model download, Atlas service, or real patient data was used.

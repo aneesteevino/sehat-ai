@@ -6,7 +6,7 @@ Sehat AI is a safety-first healthcare knowledge and assistance platform under in
 
 ## Current state
 
-Milestone 3 is complete locally: the Next.js App Router interface, FastAPI identity API, revocable local sessions, role policies, and conditional MongoDB adapter are implemented. Healthcare and AI features are not operational. See [PROJECT_STATUS.md](PROJECT_STATUS.md) and [NEXT_STEPS.md](NEXT_STEPS.md).
+Milestone 4 is complete locally: the identity foundation now includes approved-source ingestion, deterministic evidence retrieval, versioned citations, and an authenticated evidence-search preview. Answer generation and clinical features are not operational. See [PROJECT_STATUS.md](PROJECT_STATUS.md) and [NEXT_STEPS.md](NEXT_STEPS.md).
 
 ## Planned architecture
 

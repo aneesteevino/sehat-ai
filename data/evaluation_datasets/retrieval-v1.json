@@ -1,0 +1,26 @@
+{
+  "dataset_id": "retrieval-v1",
+  "description": "Small deterministic retrieval checks over evaluation-only CDC summaries.",
+  "cases": [
+    {
+      "id": "handwashing-duration",
+      "query": "How long should hands be scrubbed with soap?",
+      "expected_source_id": "cdc-handwashing-faq"
+    },
+    {
+      "id": "sanitizer-alcohol",
+      "query": "What alcohol percentage should hand sanitizer contain?",
+      "expected_source_id": "cdc-handwashing-faq"
+    },
+    {
+      "id": "flu-onset-symptoms",
+      "query": "Which symptoms can begin suddenly with influenza?",
+      "expected_source_id": "cdc-influenza-clinical-signs"
+    },
+    {
+      "id": "flu-duration",
+      "query": "How many days do uncomplicated flu symptoms usually take to improve?",
+      "expected_source_id": "cdc-influenza-clinical-signs"
+    }
+  ]
+}

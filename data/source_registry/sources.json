@@ -1,0 +1,37 @@
+{
+  "registry_version": 1,
+  "sources": [
+    {
+      "id": "cdc-handwashing-faq",
+      "title": "Hand Hygiene Frequently Asked Questions",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "canonical_url": "https://www.cdc.gov/clean-hands/faq/",
+      "source_updated_at": "2024-03-14",
+      "retrieved_at": "2026-10-14",
+      "license_name": "U.S. government public-domain material, subject to CDC exceptions",
+      "license_url": "https://www.cdc.gov/Other/imagereuse.html",
+      "attribution": "Source material developed by the U.S. Centers for Disease Control and Prevention (CDC).",
+      "non_endorsement": "Use of this evaluation summary does not imply endorsement by CDC, HHS, or the United States Government.",
+      "fixture_path": "fixtures/cdc-handwashing.txt",
+      "content_type": "text/plain",
+      "expected_sha256": "0201ab37b58ad9c9ac2212dbcea062355ed061fb9d9d68e037187c78e0968392",
+      "status": "approved_for_evaluation"
+    },
+    {
+      "id": "cdc-influenza-clinical-signs",
+      "title": "Clinical Signs and Symptoms of Influenza",
+      "publisher": "U.S. Centers for Disease Control and Prevention",
+      "canonical_url": "https://www.cdc.gov/flu/hcp/clinical-signs/index.html",
+      "source_updated_at": "2026-02-04",
+      "retrieved_at": "2026-10-14",
+      "license_name": "U.S. government public-domain material, subject to CDC exceptions",
+      "license_url": "https://www.cdc.gov/Other/imagereuse.html",
+      "attribution": "Source material developed by the U.S. Centers for Disease Control and Prevention (CDC).",
+      "non_endorsement": "Use of this evaluation summary does not imply endorsement by CDC, HHS, or the United States Government.",
+      "fixture_path": "fixtures/cdc-influenza-signs.txt",
+      "content_type": "text/plain",
+      "expected_sha256": "240721eb26186fc17bff282fc4672f6dec1a07efe9bf8249f7c62c0d48134c12",
+      "status": "approved_for_evaluation"
+    }
+  ]
+}

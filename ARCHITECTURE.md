@@ -10,8 +10,8 @@ Browser
           -> identity service -> Argon2id + opaque revocable sessions + RBAC
           -> Safety policy engine (deterministic)
           -> LLM provider interface -> mock / verified hosted provider
-          -> RAG service -> embeddings -> vector + keyword retrieval
-          -> Document service -> isolated extraction and validation
+          -> retrieval service -> deterministic lexical embeddings + evidence citations
+          -> document service -> bounded approved text/PDF extraction and validation
           -> repository interfaces -> PyMongo Async Atlas / in-memory test adapter
 ```
 
@@ -52,3 +52,5 @@ If evidence is insufficient, the response must abstain from unsupported medical 
 The Next.js frontend uses server components by default and small client components only where browser state or interactivity is required. Tailwind CSS is the styling system; global CSS is limited to design tokens and document defaults. The frontend can use Vercel. The backend stays portable until file upload, duration, cold-start, model loading, and zero-cost constraints are tested. Large files should eventually use direct object-storage uploads rather than transit through a Vercel Function; no storage provider is selected yet.
 
 Production identity persistence requires MongoDB and fails closed when its URI or the authentication secret is absent. Local tests use an injected in-memory repository. See `DATABASE_SCHEMA.md`, `SECURITY.md`, and `API_DOCUMENTATION.md`.
+
+Knowledge ingestion is registry-driven and offline: reviewed fixtures are checksum-pinned, normalized, paragraph-aware chunked, embedded through an interface, and stored with immutable source-version metadata. The current lexical hashing implementation is a deterministic baseline, not a semantic medical model. Retrieved content remains untrusted and the API returns evidence without generating an answer.

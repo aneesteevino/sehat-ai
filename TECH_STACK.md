@@ -11,6 +11,8 @@ Last verified: 2026-10-14.
 | Identity | `pwdlib` Argon2id + opaque revocable sessions | Implemented locally | Raw tokens stay in HTTP-only cookies and are stored only as keyed digests. Production hardening gaps remain documented. |
 | Database | PyMongo Async 4.18 + MongoDB Atlas Free candidate | Adapter implemented; live Atlas conditional | Local tests use memory; production requires MongoDB, but this account is not inspectable yet. |
 | Unit/integration tests | pytest + Jest/Testing Library | Selected | External providers mocked by default. |
+| Approved document extraction | pypdf 6.20 + strict UTF-8 text | Implemented for bounded registry fixtures | No OCR; arbitrary uploads remain prohibited until isolation is added. |
+| Development retrieval | 256-dimensional signed lexical hashing + hybrid ranker | Implemented baseline | Zero-download and deterministic; not semantic or medically validated. |
 | Embeddings | `sentence-transformers/all-MiniLM-L6-v2` | Candidate, metadata verified | Apache-2.0, 384 dimensions, CPU-capable; quality and local footprint still require measurement. |
 | Reranker | `cross-encoder/ms-marco-MiniLM-L6-v2` | Optional candidate | Apache-2.0; about 91 MB weights; include only if evaluation improves. |
 | Local generator | `Qwen/Qwen2.5-1.5B-Instruct` | Fallback candidate only | Apache-2.0 metadata verified; full/quantized runtime size and this machine's performance are not tested, so do not download yet. |

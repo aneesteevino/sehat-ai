@@ -75,3 +75,15 @@ Keep identity authority in FastAPI rather than adding a second Next.js identity 
 Status: Accepted conditionally, 2026-10-14.
 
 Use the official PyMongo Async driver behind the identity repository interface when `MONGODB_URI` is present. Keep deterministic tests on the in-memory adapter. Production must fail closed without MongoDB; live Atlas connectivity and account permissions remain an external validation gate.
+
+## ADR-013: Registry-pinned offline ingestion
+
+Status: Accepted, 2026-10-14.
+
+Ingest only reviewed, local, checksum-pinned fixtures whose provenance, version date, reuse basis, attribution, and approval state are recorded. Do not fetch changing medical pages during application startup or automated tests. This produces reproducible source versions and prevents an unavailable or modified website from silently changing evaluation results.
+
+## ADR-014: Deterministic lexical retrieval before model download
+
+Status: Accepted as baseline, 2026-10-14.
+
+Use a pure-Python signed lexical hashing provider and hybrid overlap ranker for the first retrieval contract. It adds no model weight, provider call, or cost and establishes deterministic Recall@k/MRR and citation tests. Keep `all-MiniLM-L6-v2` as an unevaluated candidate; download it only if a broader dataset can demonstrate material quality improvement within the storage and latency budget.

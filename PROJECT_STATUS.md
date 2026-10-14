@@ -4,7 +4,7 @@ Last updated: 2026-10-14 (Asia/Karachi)
 
 ## Phase
 
-Milestone 3 complete and verified locally: identity, authorization, browser session boundary, and conditional persistence. Milestone 4 (knowledge ingestion and retrieval) is next.
+Milestone 4 complete and verified locally: approved-source ingestion, deterministic retrieval, versioned citations, and authenticated evidence search. Milestone 5 (grounded answer generation) is next.
 
 ## Completed and verified
 
@@ -26,15 +26,20 @@ Milestone 3 complete and verified locally: identity, authorization, browser sess
 - Next.js implements accessible sign-up/sign-in pages, an authenticated server-rendered workspace, and same-origin auth Route Handlers with Secure HTTP-only cookies in production.
 - The repository boundary has a concurrency-safe local adapter and a conditional official PyMongo Async adapter. Unique identity indexes and session TTL cleanup are defined.
 - Database schema, pagination, retention, audit-event plan, security baseline, and identity API contracts are documented.
+- A checksum-pinned source registry contains two evaluation-only CDC-derived summaries with attribution, reuse-policy, version, and non-endorsement metadata.
+- Bounded UTF-8 and PDF extraction, Unicode normalization, paragraph-aware chunking, content/version deduplication, and immutable citation locators are implemented.
+- A zero-download 256-dimensional lexical hashing provider and hybrid ranker establish a deterministic five-chunk baseline: Recall@2 1.00 and MRR 1.00 across four test queries.
+- Authenticated FastAPI and Next.js evidence-search endpoints return versioned, non-cacheable, explicitly untrusted evidence with no generated medical answer.
 
 ## Partially completed
 
 - Live Atlas connectivity and account-specific permissions remain conditional; the adapter is unit tested without a network connection.
 - Authentication is an MVP foundation; rate limiting, verified email, recovery, MFA decision, and persistent audit events remain pre-deployment work.
+- The retrieval corpus and evaluation set are intentionally tiny; semantic, multilingual, and medical quality remain unproven.
 
 ## Not started
 
-- LLM integration, RAG, ingestion, controlled workflows, evaluation, and deployment.
+- Grounded LLM answer generation, controlled workflows, broader evaluation, and deployment.
 - Clinical/domain review; this is mandatory before any claim of medical readiness.
 
 ## Current architecture
@@ -53,9 +58,9 @@ See `ARCHITECTURE.md`. In short: Vercel-ready Next.js App Router frontend with T
 
 ## Test status
 
-- Backend: 23 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
-- Frontend: 8 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed with static public/auth pages and dynamic auth/workspace routes.
-- Runtime smoke: registration returned 201, the protected workspace rendered the authenticated identity, logout returned 200, and reuse of the revoked session redirected to sign-in. FastAPI observed the final token as 401.
+- Backend: 34 pytest tests passed; Ruff passed. One upstream FastAPI/Starlette warning notes that `httpx` TestClient support is deprecated in favor of `httpx2`.
+- Frontend: 10 Jest tests passed; ESLint passed with zero warnings; TypeScript passed; Next.js production build passed with the dynamic evidence BFF route.
+- Runtime smoke: authenticated workspace and evidence search returned HTTP 200; the handwashing query ranked the expected versioned source first, marked it untrusted, returned a paragraph locator, set `generated_answer` to null, and used `Cache-Control: no-store`.
 - Production npm dependency audit: 0 known vulnerabilities. Development-only audit currently reports 19 moderate and 5 high transitive advisories in current Jest and Next ESLint tooling; npm's proposed fixes are unsafe major downgrades, so these are documented rather than forced.
 
 ## Deployment status
@@ -64,9 +69,9 @@ Not deployed. Vercel project access is blocked by connector scope authorization.
 
 ## Storage status
 
-- Free on C: after Milestone 3 verification: 83.01 GiB. The larger host-level decrease is not attributable to the project, whose footprint grew by about 25 MiB.
+- Free on C: after Milestone 4 verification: 58.89 GiB. The large host-level decrease occurred outside the project; the project itself grew by about 14 MiB.
 - Project budget: no more than 50 GB; near-term target below 2 GB excluding package caches.
-- Project footprint including local dependencies/build output: approximately 611.62 MiB (`.venv` 82.01 MiB, `node_modules` 489.34 MiB, `.next` 39.24 MiB).
+- Project footprint including local dependencies/build output: approximately 625.59 MiB (`.venv` 85.67 MiB, `node_modules` 489.34 MiB, with the remainder primarily the production build and source files).
 - No models or datasets have been downloaded.
 
 ## Known limitations
@@ -76,3 +81,4 @@ Not deployed. Vercel project access is blocked by connector scope authorization.
 - The selected local embedding and reranking models have not yet been downloaded or benchmarked.
 - No healthcare feature is clinically validated.
 - No live Atlas integration test has run; local identities are intentionally lost when the API restarts without `MONGODB_URI`.
+- The PDF parser is limited to reviewed registry fixtures; arbitrary uploads remain prohibited without isolation and malware/resource controls.

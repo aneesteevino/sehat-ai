@@ -1,6 +1,7 @@
 """Typed application configuration with production safety checks."""
 
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic import AnyHttpUrl, SecretStr, model_validator
@@ -24,6 +25,7 @@ class Settings(BaseSettings):
     mongodb_database: str = "sehat_ai"
     auth_secret: SecretStr | None = None
     session_ttl_minutes: int = 60
+    knowledge_registry_path: Path = Path("data/source_registry/sources.json")
 
     @model_validator(mode="after")
     def require_production_secrets(self) -> "Settings":

@@ -12,12 +12,17 @@ from fastapi.responses import JSONResponse
 
 from sehat_api import __version__
 from sehat_api.api.identity import router as identity_router
+from sehat_api.api.knowledge import router as knowledge_router
 from sehat_api.config import Settings, get_settings
 from sehat_api.identity.service import IdentityService
+from sehat_api.knowledge.embeddings import HashingEmbeddingProvider
+from sehat_api.knowledge.ingestion import IngestionService
+from sehat_api.knowledge.retrieval import RetrievalService
 from sehat_api.logging import configure_logging
 from sehat_api.middleware import RequestIdMiddleware
 from sehat_api.models import HealthCheck, HealthResponse
 from sehat_api.repositories.identity import IdentityRepository, InMemoryIdentityRepository
+from sehat_api.repositories.knowledge import InMemoryKnowledgeRepository, KnowledgeRepository
 from sehat_api.repositories.mongo_identity import MongoIdentityRepository
 
 logger = logging.getLogger("sehat_api")
@@ -26,6 +31,7 @@ logger = logging.getLogger("sehat_api")
 def create_app(
     settings: Settings | None = None,
     identity_repository: IdentityRepository | None = None,
+    knowledge_repository: KnowledgeRepository | None = None,
 ) -> FastAPI:
     """Build the application with explicit, testable settings."""
 
@@ -47,10 +53,16 @@ def create_app(
         active_repository = InMemoryIdentityRepository()
         repository_kind = "memory"
 
+    active_knowledge_repository = knowledge_repository or InMemoryKnowledgeRepository()
+    embeddings = HashingEmbeddingProvider()
+    ingestion_service = IngestionService(active_knowledge_repository, embeddings)
+    retrieval_service = RetrievalService(active_knowledge_repository, embeddings)
+
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         if mongo_repository is not None:
             await mongo_repository.initialize()
+        await ingestion_service.ingest_registry(active_settings.knowledge_registry_path)
         try:
             yield
         finally:
@@ -68,6 +80,8 @@ def create_app(
     api.state.settings = active_settings
     api.state.identity_repository = active_repository
     api.state.repository_kind = repository_kind
+    api.state.knowledge_repository = active_knowledge_repository
+    api.state.retrieval_service = retrieval_service
     auth_secret = (
         active_settings.auth_secret.get_secret_value().encode()
         if active_settings.auth_secret
@@ -88,6 +102,7 @@ def create_app(
         expose_headers=["X-Request-ID"],
     )
     api.include_router(identity_router)
+    api.include_router(knowledge_router)
 
     @api.exception_handler(Exception)
     async def unhandled_exception(request: Request, exc: Exception) -> JSONResponse:

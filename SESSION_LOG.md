@@ -108,3 +108,29 @@ Milestone 2 is implemented and verified in commit `4de580a`. A generated editabl
 
 - Project footprint is approximately 611.62 MiB. C: reported 83.01 GiB free; the project remains far below its 50 GB ceiling and no model or dataset was downloaded.
 - Milestone 3 was committed as `bfceee4` and pushed to the verified `aneesteevino/sehat-ai` repository. Milestone 4 knowledge ingestion and retrieval is next. Atlas, Vercel project scope, hosted inference, and clinical review blockers remain open.
+
+## 2026-10-14 — Milestone 4 knowledge ingestion and retrieval
+
+### Sources and ingestion
+
+- Added an approved-source registry with two short CDC-derived evaluation summaries, exact update/retrieval dates, attribution, non-endorsement, reuse-policy URLs, and normalized SHA-256 checksums.
+- Added bounded strict-UTF-8 and `pypdf` extraction, path containment, Unicode normalization, paragraph-aware chunking, immutable versions, and deduplication.
+- Documented that arbitrary PDF uploads remain prohibited; current parsing is only for reviewed local registry fixtures.
+
+### Retrieval and product surface
+
+- Added a provider-neutral embedding protocol and zero-download 256-dimensional signed lexical hashing baseline.
+- Added deterministic hybrid ranking and evidence contracts carrying source/version IDs, canonical URL, paragraph/page locator, score, and `content_trust=untrusted`.
+- Added authenticated FastAPI and Next.js search routes plus an accessible workspace evidence-search interface. The response explicitly contains no generated answer.
+
+### Evaluation and verification
+
+- Baseline corpus: two sources, five chunks, four queries; Recall@2 1.00 and MRR 1.00.
+- Ruff passed; pytest passed 34 tests including PDF boundaries, deduplication, retrieval, API authentication, citations, and retrieved prompt-injection handling.
+- Jest passed 10 tests; TypeScript, ESLint, and the Next.js production build passed.
+- End-to-end runtime passed registration, authenticated workspace rendering, BFF evidence retrieval, top-source citation, untrusted marker, null generated answer, and no-store response caching.
+
+### Storage and stopping point
+
+- Project footprint is approximately 625.59 MiB; no model weights or large datasets were downloaded. C: reported 58.89 GiB free, with the host-level decrease occurring outside this project.
+- Milestone 5 grounded answer generation is next. Atlas, Vercel project scope, hosted inference, arbitrary upload isolation, and clinical review blockers remain open.

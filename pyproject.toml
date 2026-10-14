@@ -12,6 +12,7 @@ dependencies = [
   "fastapi==0.143.0",
   "pydantic-settings==2.15.0",
   "pymongo==4.18.3",
+  "pypdf==6.20.1",
   "pwdlib[argon2]==0.3.1",
   "uvicorn[standard]==0.54.0",
 ]
@@ -31,7 +32,7 @@ package-dir = {"" = "application/backend/src"}
 where = ["application/backend/src"]
 
 [tool.pytest.ini_options]
-addopts = "-q"
+addopts = "-q --basetemp=.pytest-tmp"
 testpaths = ["tests/backend"]
 
 [tool.ruff]

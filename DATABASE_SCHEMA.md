@@ -39,6 +39,16 @@ Indexes: unique `token_digest`; `user_id`; TTL `expires_at`. MongoDB TTL cleanup
 
 Planned fields: `_id`, `occurred_at`, `actor_user_id`, `action`, `target_type`, `target_id`, `outcome`, `request_id`, and a small allow-listed metadata object. Passwords, tokens, health text, document contents, and provider secrets must never be recorded. Expected indexes are `occurred_at` and `(actor_user_id, occurred_at)`. A deletion TTL will be added only after a written retention policy is approved.
 
+### Knowledge collections
+
+The following contracts are implemented in the in-memory repository and planned for the Atlas adapter:
+
+- `sources`: stable source ID, title, publisher, canonical URL, licensing/attribution metadata, approval status, and update/retrieval dates.
+- `source_versions`: immutable content checksum, source update date, retrieval date, and ingestion timestamp. The source ID plus checksum-derived version ID prevents silent replacement.
+- `knowledge_chunks`: source/version IDs, normalized content and checksum, ordered chunk index, page/paragraph locator, untrusted-content marker, and embedding vector.
+
+Expected indexes are unique source ID, unique source-version ID, unique chunk ID, `(source_id, chunk_index)`, and the Atlas vector index only after live capability validation. Source deletion will use a tombstone plus explicit chunk/vector removal; no knowledge TTL is applied.
+
 ## Pagination and retention rules
 
 - List endpoints will use opaque cursor pagination ordered by `(created_at, _id)`, with a default page size of 25 and a hard maximum of 100. Offset pagination is not planned for growing or sensitive collections.

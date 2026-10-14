@@ -12,11 +12,11 @@ Acceptance criteria: FastAPI health/config API and a Next.js TypeScript App Rout
 
 Acceptance criteria: secure password hashing or an approved external identity flow; role checks; Atlas integration tests where available; pagination, indexes, retention fields, and audit events documented.
 
-## Milestone 4 — Knowledge ingestion and retrieval (next)
+## Milestone 4 — Knowledge ingestion and retrieval (complete locally)
 
 Acceptance criteria: approved-source registry; safe PDF/text extraction; normalization, chunking, metadata, deduplication, embeddings, retrieval, and citation traceability; deterministic retrieval metrics with a small curated corpus.
 
-## Milestone 5 — LLM answer generation
+## Milestone 5 — LLM answer generation (next)
 
 Acceptance criteria: provider abstraction, schema validation, timeouts/retries, mock tests, grounded-answer contract, citations, abstention, and usage accounting. A real provider is optional until free access is verified.
 
