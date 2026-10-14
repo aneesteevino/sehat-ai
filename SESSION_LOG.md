@@ -170,3 +170,7 @@ Milestone 5 implementation was committed as `a33a7e7` and pushed to the verified
 - Browser verification completed emergency routing and the full questionnaire with expected 200/201 logs and no console errors.
 - No provider call occurred on emergency routing; no model, paid service, upload, Atlas resource, or real patient data was used.
 - Final footprint was approximately 732.74 MiB with 59.47 GiB free on C:.
+
+### Stopping point
+
+Milestone 6 implementation was committed as `604df90` and pushed to the verified `aneesteevino/sehat-ai` repository. Milestone 7 product surfaces is next; deployment authorization, live Atlas, hosted inference, arbitrary upload isolation, and clinical review blockers remain open.
