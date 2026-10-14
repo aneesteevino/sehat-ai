@@ -55,6 +55,8 @@ See `ARCHITECTURE.md`. In short: Vercel-ready Next.js App Router frontend with T
 - Milestone 2 implementation commit: `4de580a` (`feat: add Next.js and FastAPI foundations`).
 - Milestone 2 checkpoint commit: `0426ac3` (`docs: record milestone 2 checkpoint`).
 - Milestone 3 implementation commit: `bfceee4` (`feat: add identity and persistence foundation`).
+- Milestone 3 checkpoint commit: `9b048a3` (`docs: record milestone 3 checkpoint`).
+- Milestone 4 implementation commit: `2b0dba7` (`feat: add grounded evidence retrieval`).
 
 ## Test status
 
